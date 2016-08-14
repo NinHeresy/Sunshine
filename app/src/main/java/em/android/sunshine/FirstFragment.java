@@ -1,12 +1,14 @@
 package em.android.sunshine;
 
-import android.content.Context;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -38,14 +40,35 @@ public class FirstFragment extends Fragment{
     public FirstFragment(){
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    //chamada do menu pelo fragment
+    public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
+        menuInflater.inflate(R.menu.fore_cast_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+       int id = item.getItemId();
+        if(id==R.id.refresh){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
         ArrayAdapter<String> mForecastAdapter;
 
-        String [] data = {
+        String[] data = {
 
                 "Hoje - Doming - 29º ",
                 "Segunda - feira - 29º",
@@ -66,8 +89,14 @@ public class FirstFragment extends Fragment{
                         R.id.list_item_forecast_textview, // The ID of the textview to populate.
                         weekForecast);
 
-        listView  = (ListView) rootView.findViewById(R.id.list_view_forecast) ;
+        listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
+
+        return rootView;
+
+        }
+
+
 
 
 //            List <String> data = Arrays.asList(
@@ -86,60 +115,82 @@ public class FirstFragment extends Fragment{
 //            listView  = (ListView) rootView.findViewById(R.id.list_view_forecast) ;
 //            listView.setAdapter(adapter);
 
-        HttpURLConnection urlConnection = null;
-        BufferedReader reader = null;
-        String forecastJsonStr = null;
 
-        try {
-            // Construct the URL for the OpenWeatherMap query
-            // Possible parameters are avaiable at OWM's forecast API page, at
-            // http://openweathermap.org/API#forecast
-            URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
 
-            // Create the request to OpenWeatherMap, and open the connection
-            urlConnection = (HttpURLConnection) url.openConnection();
-            urlConnection.setRequestMethod("GET");
-            urlConnection.connect(); //algum erro aqui
+    public class BuscaTudoNaAPI extends AsyncTask<Void, Void, Void> {
 
-            // Read the input stream into a String
-            InputStream inputStream = urlConnection.getInputStream();
-            StringBuffer buffer = new StringBuffer();
-            if (inputStream == null) {
-                // Nothing to do.
+        private final String LOG_TAG = BuscaTudoNaAPI.class.getSimpleName();
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            // These two need to be declared outside the try/catch
+            // so that they can be closed in the finally block.
+            HttpURLConnection urlConnection = null;
+            BufferedReader reader = null;
+
+            // Will contain the raw JSON response as a string.
+            String forecastJsonStr = null;
+
+
+            try
+
+            {
+                // Construct the URL for the OpenWeatherMap query
+                // Possible parameters are avaiable at OWM's forecast API page, at
+                // http://openweathermap.org/API#forecast
+                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+
+                // Create the request to OpenWeatherMap, and open the connection
+                urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.connect(); //algum erro aqui
+
+                // Read the input stream into a String
+                InputStream inputStream = urlConnection.getInputStream();
+                StringBuffer buffer = new StringBuffer();
+                if (inputStream == null) {
+                    // Nothing to do.
+                    return null;
+                }
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+
+                String line;
+                while ((line = reader.readLine()) != null) {
+                    // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
+                    // But it does make debugging a *lot* easier if you print out the completed
+                    // buffer for debugging.
+                    buffer.append(line + "\n");
+                }
+
+                if (buffer.length() == 0) {
+                    // Stream was empty.  No point in parsing.
+                    return null;
+                }
+                forecastJsonStr = buffer.toString();
+            } catch (
+                    IOException e
+                    )
+
+            {
+                Log.e("PlaceholderFragment", "Error ", e);
+                // If the code didn't successfully get the weather data, there's no point in attemping
+                // to parse it.
                 return null;
-            }
-            reader = new BufferedReader(new InputStreamReader(inputStream));
+            } finally
 
-            String line;
-            while ((line = reader.readLine()) != null) {
-                // Since it's JSON, adding a newline isn't necessary (it won't affect parsing)
-                // But it does make debugging a *lot* easier if you print out the completed
-                // buffer for debugging.
-                buffer.append(line + "\n");
-            }
-
-            if (buffer.length() == 0) {
-                // Stream was empty.  No point in parsing.
-                return null;
-            }
-            forecastJsonStr = buffer.toString();
-        } catch (IOException e) {
-            Log.e("PlaceholderFragment", "Error ", e);
-            // If the code didn't successfully get the weather data, there's no point in attemping
-            // to parse it.
-            return null;
-        } finally{
-            if (urlConnection != null) {
-                urlConnection.disconnect();
-            }
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (final IOException e) {
-                    Log.e("PlaceholderFragment", "Error closing stream", e);
+            {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e("PlaceholderFragment", "Error closing stream", e);
+                    }
                 }
             }
+            return null;
         }
-        return rootView;
-    }
-}
+    }//fim da classe asynktask
+}//fim da classe firstfragment

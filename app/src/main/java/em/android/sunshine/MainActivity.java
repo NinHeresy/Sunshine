@@ -2,6 +2,8 @@ package em.android.sunshine;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,13 +14,12 @@ public class MainActivity extends AppCompatActivity {
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SecondFragment())
+                    .add(R.id.container, new FirstFragment())
                     .commit();
         }
-
-
-
     }
+
+
 
 
 }
