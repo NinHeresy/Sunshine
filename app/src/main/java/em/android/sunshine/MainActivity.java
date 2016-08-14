@@ -46,7 +46,10 @@ public class MainActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
             View rootView = inflater.inflate(R.layout.fragment_first, container, false);
-            List <String> data = Arrays.asList(
+            ArrayAdapter<String> mForecastAdapter;
+
+            String [] data = {
+
                     "Hoje - Doming - 29º ",
                     "Segunda - feira - 29º",
                     "Terça - feira - 30º",
@@ -55,11 +58,36 @@ public class MainActivity extends AppCompatActivity {
                     "Sexta - feira - 27º",
                     "Sábado - 15º"
 
-            );
+            };
 
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, data);
+            List <String> weekForecast = new ArrayList<String>(Arrays.asList(data));
+
+            mForecastAdapter =
+                    new ArrayAdapter<String>(
+                            getActivity(), // The current context (this activity)
+                            R.layout.item_lista, // The name of the layout ID.
+                            R.id.list_item_forecast_textview, // The ID of the textview to populate.
+                            weekForecast);
+
             listView  = (ListView) rootView.findViewById(R.id.list_view_forecast) ;
-            listView.setAdapter(adapter);
+            listView.setAdapter(mForecastAdapter);
+
+
+//            List <String> data = Arrays.asList(
+//                    "Hoje - Doming - 29º ",
+//                    "Segunda - feira - 29º",
+//                    "Terça - feira - 30º",
+//                    "Quarta - feira - 31º",
+//                    "Quinta - feira - 28º",
+//                    "Sexta - feira - 27º",
+//                    "Sábado - 15º"
+//
+//            );
+
+
+//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, data);
+//            listView  = (ListView) rootView.findViewById(R.id.list_view_forecast) ;
+//            listView.setAdapter(adapter);
             return rootView;
         }
     }
