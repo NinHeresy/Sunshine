@@ -91,13 +91,9 @@ public class FirstFragment extends Fragment {
         return rootView;
 
     }
-
     public class BuscaTudoNaAPI extends AsyncTask<String, Void, Void> {
 
         private final String LOG_TAG = BuscaTudoNaAPI.class.getSimpleName();
-
-        
-
 
         @Override
         protected Void doInBackground(String... params) {
