@@ -25,14 +25,6 @@ import java.util.Arrays;
 import java.util.List;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link FirstFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link FirstFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class FirstFragment extends Fragment{
 
     ListView listView;
@@ -56,6 +48,8 @@ public class FirstFragment extends Fragment{
         // Handle item selection
        int id = item.getItemId();
         if(id==R.id.refresh){
+            BuscaTudoNaAPI buscaTudo = new BuscaTudoNaAPI();
+           buscaTudo.execute();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -96,27 +90,6 @@ public class FirstFragment extends Fragment{
 
         }
 
-
-
-
-//            List <String> data = Arrays.asList(
-//                    "Hoje - Doming - 29º ",
-//                    "Segunda - feira - 29º",
-//                    "Terça - feira - 30º",
-//                    "Quarta - feira - 31º",
-//                    "Quinta - feira - 28º",
-//                    "Sexta - feira - 27º",
-//                    "Sábado - 15º"
-//
-//            );
-
-
-//            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, data);
-//            listView  = (ListView) rootView.findViewById(R.id.list_view_forecast) ;
-//            listView.setAdapter(adapter);
-
-
-
     public class BuscaTudoNaAPI extends AsyncTask<Void, Void, Void> {
 
         private final String LOG_TAG = BuscaTudoNaAPI.class.getSimpleName();
@@ -138,7 +111,9 @@ public class FirstFragment extends Fragment{
                 // Construct the URL for the OpenWeatherMap query
                 // Possible parameters are avaiable at OWM's forecast API page, at
                 // http://openweathermap.org/API#forecast
-                URL url = new URL("http://api.openweathermap.org/data/2.5/forecast/daily?q=94043&mode=json&units=metric&cnt=7");
+                URL url  = new URL("http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=427f62014a9ec86f4d52844e57f5cefd");
+//                String apiKey = "&APPID=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
+//                URL url = new URL(baseUrl.concat(apiKey));
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
@@ -167,6 +142,7 @@ public class FirstFragment extends Fragment{
                     return null;
                 }
                 forecastJsonStr = buffer.toString();
+                Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
             } catch (
                     IOException e
                     )
