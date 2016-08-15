@@ -1,5 +1,6 @@
 package em.android.sunshine;
 
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -25,11 +26,12 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class FirstFragment extends Fragment{
+public class FirstFragment extends Fragment {
 
     ListView listView;
+    ArrayAdapter<String> mForecastAdapter;
 
-    public FirstFragment(){
+    public FirstFragment() {
     }
 
     @Override
@@ -46,10 +48,10 @@ public class FirstFragment extends Fragment{
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-       int id = item.getItemId();
-        if(id==R.id.refresh){
+        int id = item.getItemId();
+        if (id == R.id.refresh) {
             BuscaTudoNaAPI buscaTudo = new BuscaTudoNaAPI();
-           buscaTudo.execute();
+            buscaTudo.execute("524901");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -57,10 +59,10 @@ public class FirstFragment extends Fragment{
 
     @Nullable
     @Override
-     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
-        ArrayAdapter<String> mForecastAdapter;
+
 
         String[] data = {
 
@@ -88,37 +90,62 @@ public class FirstFragment extends Fragment{
 
         return rootView;
 
-        }
+    }
 
-    public class BuscaTudoNaAPI extends AsyncTask<Void, Void, Void> {
+    public class BuscaTudoNaAPI extends AsyncTask<String, Void, Void> {
 
         private final String LOG_TAG = BuscaTudoNaAPI.class.getSimpleName();
 
+        
+
+
         @Override
-        protected Void doInBackground(Void... params) {
-            // These two need to be declared outside the try/catch
-            // so that they can be closed in the finally block.
+        protected Void doInBackground(String... params) {
+
+            if (params.length == 0) {
+                return null;
+            }
+
             HttpURLConnection urlConnection = null;
             BufferedReader reader = null;
 
-            // Will contain the raw JSON response as a string.
-            String forecastJsonStr = null;
+            String format = "json";
+            String units = "metric";
+            String appid = "427f62014a9ec86f4d52844e57f5cefd";
 
+            int numDays = 7;
 
             try
 
             {
-                // Construct the URL for the OpenWeatherMap query
-                // Possible parameters are avaiable at OWM's forecast API page, at
-                // http://openweathermap.org/API#forecast
-                URL url  = new URL("http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=427f62014a9ec86f4d52844e57f5cefd");
+
+                final String FORECAST_BASE_URL = "http://api.openweathermap.org/data/2.5/forecast/city?";
+                final String QUERY_PARAM = "id";
+                final String FORMAT_PARAM = "mode";
+                final String FORMAT_UNIT = "unit";
+                final String DAYS_PARAM = "cnt";
+                final String APP_ID = "APPID";
+
+
+                Uri builtUri = Uri.parse(FORECAST_BASE_URL).buildUpon().
+                        appendQueryParameter(QUERY_PARAM, params[0]).
+                        appendQueryParameter(APP_ID, appid).
+                        appendQueryParameter(FORMAT_PARAM, format).
+                        appendQueryParameter(FORMAT_UNIT, units).
+                        appendQueryParameter(DAYS_PARAM, Integer.toString(numDays)).
+                        build();
+
+                URL url = new URL(builtUri.toString());//("http://api.openweathermap.org/data/2.5/forecast/city?id=524901&APPID=427f62014a9ec86f4d52844e57f5cefd");
+                Log.v(LOG_TAG, "Built URI" + builtUri.toString());
+
+
 //                String apiKey = "&APPID=" + BuildConfig.OPEN_WEATHER_MAP_API_KEY;
 //                URL url = new URL(baseUrl.concat(apiKey));
 
                 // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
-                urlConnection.connect(); //algum erro aqui
+                urlConnection.connect();
 
                 // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
@@ -141,8 +168,8 @@ public class FirstFragment extends Fragment{
                     // Stream was empty.  No point in parsing.
                     return null;
                 }
-                forecastJsonStr = buffer.toString();
-                Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
+//                forecastJsonStr = buffer.toString();
+//                Log.v(LOG_TAG, "Forecast JSON String: " + forecastJsonStr);
             } catch (
                     IOException e
                     )
@@ -167,6 +194,17 @@ public class FirstFragment extends Fragment{
                 }
             }
             return null;
+
+
+        }
+
+        protected void onPostExecute(String[] result) {
+            if (result != null) {
+                mForecastAdapter.clear();
+                for (String dayForecastStr : result) {
+                    mForecastAdapter.add(dayForecastStr);
+                }
+            }
         }
     }//fim da classe asynktask
 }//fim da classe firstfragment
