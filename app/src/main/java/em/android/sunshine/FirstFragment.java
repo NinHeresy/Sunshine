@@ -70,7 +70,7 @@ public class FirstFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
         String[] data = {
 
-                "Hoje - Doming - 29º ",
+                "Doming - 29º ",
                 "Segunda - feira - 29º",
                 "Terça - feira - 30º",
                 "Quarta - feira - 31º",

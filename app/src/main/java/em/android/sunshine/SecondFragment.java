@@ -59,7 +59,7 @@ public class SecondFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.refresh) {
             FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("94043");
+            weatherTask.execute("524901");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -69,21 +69,25 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Create some dummy data for the ListView.  Here's a sample weekly forecast
+        //dados estaticos para preenchimento da listview
         String[] data = {
-                "Mon 6/23 - Sunny - 31/17",
-                "Tue 6/24 - Foggy - 21/8",
-                "Wed 6/25 - Cloudy - 22/17",
-                "Thurs 6/26 - Rainy - 18/11",
-                "Fri 6/27 - Foggy - 21/10",
-                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
-                "Sun 6/29 - Sunny - 20/7"
+                "Doming - 29º ",
+                "Segunda - feira - 29º",
+                "Terça - feira - 30º",
+                "Quarta - feira - 31º",
+                "Quinta - feira - 28º",
+                "Sexta - feira - 27º",
+                "Sábado - 15º"
+
         };
+
+        //list para guardar os dados ficticios da primeira visualizaçao
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-        // Now that we have some dummy forecast data, create an ArrayAdapter.
-        // The ArrayAdapter will take data from a source (like our dummy forecast) and
-        // use it to populate the ListView it's attached to.
+
+        // mForecastAdapter é um ArrayAdapter que vai pegar os dados da
+        //List<String> weekforecast e colocar dentro de um listview.
+
         mForecastAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
