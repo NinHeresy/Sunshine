@@ -12,8 +12,11 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -57,9 +60,11 @@ public class SecondFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+
         if (id == R.id.refresh) {
             FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("524901");
+            weatherTask.execute("520493");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -69,7 +74,7 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //dados estaticos para preenchimento da listview
+        // Create some dummy data for the ListView.  Here's a sample weekly forecast
         String[] data = {
                 "Doming - 29º ",
                 "Segunda - feira - 29º",
@@ -78,16 +83,12 @@ public class SecondFragment extends Fragment {
                 "Quinta - feira - 28º",
                 "Sexta - feira - 27º",
                 "Sábado - 15º"
-
         };
-
-        //list para guardar os dados ficticios da primeira visualizaçao
         List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-
-        // mForecastAdapter é um ArrayAdapter que vai pegar os dados da
-        //List<String> weekforecast e colocar dentro de um listview.
-
+        // Now that we have some dummy forecast data, create an ArrayAdapter.
+        // The ArrayAdapter will take data from a source (like our dummy forecast) and
+        // use it to populate the ListView it's attached to.
         mForecastAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
@@ -100,6 +101,20 @@ public class SecondFragment extends Fragment {
         // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//a forma que pega pelo id do item e converte em string para exibição
+//                TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+//                Toast.makeText(getContext(), tv.getText().toString(), Toast.LENGTH_SHORT).show();
+
+//a forma que pega o texto do listview
+                String forecast = mForecastAdapter.getItem(position);
+                Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
         return rootView;
     }
@@ -244,7 +259,7 @@ public class SecondFragment extends Fragment {
                         .appendQueryParameter(FORMAT_PARAM, format)
                         .appendQueryParameter(UNITS_PARAM, units)
                         .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
-                        .appendQueryParameter(APPID_PARAM,appid)
+                        .appendQueryParameter(APPID_PARAM, appid)
                         .build();
 
                 URL url = new URL(builtUri.toString());
