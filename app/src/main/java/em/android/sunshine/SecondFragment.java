@@ -77,7 +77,7 @@ public class SecondFragment extends Fragment {
 
         // Create some dummy data for the ListView.  Here's a sample weekly forecast
         String[] data = {
-                "Doming - 29º ",
+                "Domingo - 29º ",
                 "Segunda - feira - 29º",
                 "Terça - feira - 30º",
                 "Quarta - feira - 31º",
@@ -111,12 +111,17 @@ public class SecondFragment extends Fragment {
 //                Toast.makeText(getContext(), tv.getText().toString(), Toast.LENGTH_SHORT).show();
 
 //a forma que pega o texto do listview
-                String forecast = mForecastAdapter.getItem(position);
-                TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-                Intent downloadIntent = new Intent(getActivity(), DetailActvity.class).
-                        putExtra(Intent.EXTRA_TEXT, forecast);
-                startActivity(downloadIntent);
+//                String forecast = mForecastAdapter.getItem(position);
+//                //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+//                Intent downloadIntent = new Intent(getActivity(), DetailActvity.class).
+//                        putExtra(Intent.EXTRA_TEXT, forecast);
+//                startActivity(downloadIntent);
 
+                Intent intent = new Intent(getActivity(), DetailActvity.class);
+                TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+                String message = tv.getText().toString();
+                intent.putExtra(intent.EXTRA_TEXT, message);
+                startActivity(intent);
             }
         });
 

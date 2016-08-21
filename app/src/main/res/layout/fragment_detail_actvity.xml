@@ -9,5 +9,11 @@
     tools:context="em.android.sunshine.DetailActvityFragment"
     tools:showIn="@layout/activity_detail_actvity">
 
+    <TextView
+        android:id="@+id/textview_activity_detail"
+        android:hint="ola"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
