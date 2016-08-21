@@ -1,5 +1,6 @@
 package em.android.sunshine;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -111,7 +112,10 @@ public class SecondFragment extends Fragment {
 
 //a forma que pega o texto do listview
                 String forecast = mForecastAdapter.getItem(position);
-                Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
+                TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
+                Intent downloadIntent = new Intent(getActivity(), DetailActvity.class).
+                        putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(downloadIntent);
 
             }
         });
