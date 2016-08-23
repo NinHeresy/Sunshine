@@ -1,9 +1,11 @@
 package em.android.sunshine;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -33,6 +35,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.prefs.PreferenceChangeEvent;
 
 /**
  * Created by emanu on 15/08/2016.
@@ -61,61 +64,52 @@ public class SecondFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
-        if (id == R.id.refresh) {
-            FetchWeatherTask weatherTask = new FetchWeatherTask();
-            weatherTask.execute("520493");
+        if (id == R.id.refresh){
+            atualizaTempo();
             return true;
         }
+        if(id == R.id.action_settings){
+            Intent intent = new Intent(getActivity(), SetingsActivity.class);
+            startActivity(intent);
+
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void atualizaTempo(){
+
+        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String location = sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
+        fetchWeatherTask.execute(location);
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        atualizaTempo();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Create some dummy data for the ListView.  Here's a sample weekly forecast
-        String[] data = {
-                "Domingo - 29º ",
-                "Segunda - feira - 29º",
-                "Terça - feira - 30º",
-                "Quarta - feira - 31º",
-                "Quinta - feira - 28º",
-                "Sexta - feira - 27º",
-                "Sábado - 15º"
-        };
-        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
-        // Now that we have some dummy forecast data, create an ArrayAdapter.
-        // The ArrayAdapter will take data from a source (like our dummy forecast) and
-        // use it to populate the ListView it's attached to.
         mForecastAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
                         R.layout.item_lista, // The name of the layout ID.
                         R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                        weekForecast);
+                        new ArrayList<String>());
 
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
-
-        // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//a forma que pega pelo id do item e converte em string para exibição
-//                TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-//                Toast.makeText(getContext(), tv.getText().toString(), Toast.LENGTH_SHORT).show();
-
-//a forma que pega o texto do listview
-//                String forecast = mForecastAdapter.getItem(position);
-//                //Toast.makeText(getActivity(), forecast, Toast.LENGTH_SHORT).show();
-//                Intent downloadIntent = new Intent(getActivity(), DetailActvity.class).
-//                        putExtra(Intent.EXTRA_TEXT, forecast);
-//                startActivity(downloadIntent);
 
                 Intent intent = new Intent(getActivity(), DetailActvity.class);
                 TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
@@ -275,16 +269,16 @@ public class SecondFragment extends Fragment {
 
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
-                // Create the request to OpenWeatherMap, and open the connection
+                // Criar a requisição para OpenWeatherMap, e abre a conexão
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
-                // Read the input stream into a String
+                // Lê o input stream dentro da String
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
-                    // Nothing to do.
+                    //não faz nada
                     return null;
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -340,7 +334,6 @@ public class SecondFragment extends Fragment {
                 for(String dayForecastStr : result) {
                     mForecastAdapter.add(dayForecastStr);
                 }
-                // New data is back from the server.  Hooray!
             }
         }
     }

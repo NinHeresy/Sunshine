@@ -5,7 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="tempo">Hoje - Domingo - 22º </string>
     <string name="refresh">Atualizar</string>
-    <string name="chave_api_tempo">427f62014a9ec86f4d52844e57f5cefd</string>
+    <string name="chave_api_tempo" translatable="false">427f62014a9ec86f4d52844e57f5cefd</string>
     <string name="title_activity_detail">DetailActivity</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_detail2">DetailActivity2</string>
@@ -14,4 +14,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_detail_actvity">DetailActvity</string>
+    <string name="pref_location_label">Localização</string>
+    <string name="pref_location_key" translatable="false">localizacao</string>
+    <string name="pref_location_default" translatable="false">94043</string>
 </resources>

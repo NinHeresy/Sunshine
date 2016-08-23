@@ -26,6 +26,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="em.android.sunshine.MainActivity" />
         </activity>
+        <activity android:name=".SetingsActivity"
+            android:label="@string/action_settings"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/Theme.AppCompat.CompactMenu"></activity>
     </application>
 
 </manifest>
