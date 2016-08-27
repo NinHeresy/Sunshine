@@ -34,6 +34,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.prefs.PreferenceChangeEvent;
 
@@ -42,8 +43,9 @@ import java.util.prefs.PreferenceChangeEvent;
  */
 public class SecondFragment extends Fragment {
     private ArrayAdapter<String> mForecastAdapter;
+    private String nomeCidade;
 
-    public SecondFragment() {
+        public SecondFragment() {
     }
 
     @Override
@@ -51,6 +53,7 @@ public class SecondFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
+
     }
 
     @Override
@@ -103,6 +106,7 @@ public class SecondFragment extends Fragment {
                         R.id.list_item_forecast_textview, // The ID of the textview to populate.
                         new ArrayList<String>());
 
+
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
@@ -122,7 +126,12 @@ public class SecondFragment extends Fragment {
         return rootView;
     }
 
+
+
+
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
+
+
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
@@ -132,15 +141,30 @@ public class SecondFragment extends Fragment {
         private String getReadableDateString(long time){
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
-            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE dd MMM");
-            return shortenedDateFormat.format(time);
+            Date date = new Date(time*1000);
+            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE, dd MMM");
+            return shortenedDateFormat.format(date).toString();
         }
 
         /**
-         * Prepare the weather high/lows for presentation.
+         * Extrai a temperatura minima e máxima.
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unitType = sharedPreferences.getString(
+                    getString(R.string.pref_units_key),
+                    getString(R.string.pref_units_metric));
+
+            if (unitType.equals(getString(R.string.pref_units_imperial)))
+                     {
+                         high = (high * 1.8) + 32;
+                         low = (low * 1.8) + 32;
+            }else if (!unitType.equals(getString(R.string.pref_units_label_metric))){
+                Log.d(LOG_TAG, "Tipo de unidade não encontrada: " + unitType);
+
+            }
+
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
@@ -155,7 +179,7 @@ public class SecondFragment extends Fragment {
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
+        public String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -166,9 +190,12 @@ public class SecondFragment extends Fragment {
             final String OWM_MIN = "min";
             final String OWM_DESCRIPTION = "main";
 
-            JSONObject forecastJson = new JSONObject(forecastJsonStr);
-            JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
+            JSONObject forecastJson = new JSONObject(forecastJsonStr);//pega todos os dados do json
+            JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);//pega tudo abaixo de list e armazena no array
+            JSONObject nomecidade = forecastJson.getJSONObject("city");
+            nomeCidade = nomecidade.getString("name");
+            System.out.println(nomeCidade);//só pra ver se tá saindo o nome da cidade :D
             // OWM returns daily forecasts based upon the local time of the city that is being
             // asked for, which means that we need to know the GMT offset to translate this data
             // properly.
@@ -186,6 +213,9 @@ public class SecondFragment extends Fragment {
             // now we work exclusively in UTC
             dayTime = new Time();
 
+            //pega o nome da cidade em forma de texto;
+            JSONObject cidade = nomecidade;
+
             String[] resultStrs = new String[numDays];
             for(int i = 0; i < weatherArray.length(); i++) {
                 // For now, using the format "Day, description, hi/low"
@@ -194,6 +224,7 @@ public class SecondFragment extends Fragment {
                 String highAndLow;
 
                 // Get the JSON object representing the day
+
                 JSONObject dayForecast = weatherArray.getJSONObject(i);
 
                 // The date/time is returned as a long.  We need to convert that
@@ -330,8 +361,12 @@ public class SecondFragment extends Fragment {
         @Override
         protected void onPostExecute(String[] result) {
             if (result != null) {
-                mForecastAdapter.clear();
-                for(String dayForecastStr : result) {
+                //Exibe o nome da cidade!
+            TextView tv = (TextView) getView().findViewById(R.id.textview_cidade);
+            tv.setText(nomeCidade);
+               mForecastAdapter.clear();
+                for(
+                        String dayForecastStr : result) {
                     mForecastAdapter.add(dayForecastStr);
                 }
             }
