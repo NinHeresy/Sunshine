@@ -7,15 +7,6 @@
         android:title="@string/refresh"
         app:showAsAction="never"
         />
-    <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:title="@string/action_settings"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/abre_mapa"
-        android:orderInCategory="100"
-        android:title="@string/select_location_of_map"
-        app:showAsAction="never" />
+
 
 </menu>

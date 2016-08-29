@@ -71,11 +71,11 @@ public class SecondFragment extends Fragment {
             atualizaTempo();
             return true;
         }
-        if(id == R.id.action_settings){
-            Intent intent = new Intent(getActivity(), SetingsActivity.class);
-            startActivity(intent);
-
-        }
+//        if(id == R.id.action_settings){
+//            Intent intent = new Intent(getActivity(), SetingsActivity.class);
+//            startActivity(intent);
+//
+//        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -217,6 +217,13 @@ public class SecondFragment extends Fragment {
             JSONObject cidade = nomecidade;
 
             String[] resultStrs = new String[numDays];
+
+            SharedPreferences sharedPrefs =
+                    PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String unitType = sharedPrefs.getString(
+                    getString(R.string.pref_units_key),
+                    getString(R.string.pref_units_metric));
+
             for(int i = 0; i < weatherArray.length(); i++) {
                 // For now, using the format "Day, description, hi/low"
                 String day;
