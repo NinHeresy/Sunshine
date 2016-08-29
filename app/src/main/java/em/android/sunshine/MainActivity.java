@@ -70,7 +70,7 @@ public class  MainActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivity(intent);
         } else {
-            Log.d(LOG_TAG, "Couldn't call " + location + ", no receiving apps installed!");
+            Log.d(LOG_TAG, "Não foi encontrada  " + location);
         }
     }
     }
