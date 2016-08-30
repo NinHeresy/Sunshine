@@ -281,7 +281,7 @@ public class SecondFragment extends Fragment {
             String format = "json";
             String units = "metric";
             int numDays = 7;
-            String appid = "427f62014a9ec86f4d52844e57f5cefd";
+            String appid = "voce precisa arrumar uma chave propria";
 
             try {
                 // Construct the URL for the OpenWeatherMap query
