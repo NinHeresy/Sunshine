@@ -1,11 +1,8 @@
 package em.android.sunshine;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.format.Time;
 import android.util.Log;
@@ -15,11 +12,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,18 +28,15 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.prefs.PreferenceChangeEvent;
 
 /**
  * Created by emanu on 15/08/2016.
  */
 public class SecondFragment extends Fragment {
     private ArrayAdapter<String> mForecastAdapter;
-    private String nomeCidade;
 
-        public SecondFragment() {
+    public SecondFragment() {
     }
 
     @Override
@@ -53,7 +44,6 @@ public class SecondFragment extends Fragment {
         super.onCreate(savedInstanceState);
         // Add this line in order for this fragment to handle menu events.
         setHasOptionsMenu(true);
-
     }
 
     @Override
@@ -67,71 +57,50 @@ public class SecondFragment extends Fragment {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.refresh){
-            atualizaTempo();
+        if (id == R.id.refresh) {
+            FetchWeatherTask weatherTask = new FetchWeatherTask();
+            weatherTask.execute("94043");
             return true;
         }
-//        if(id == R.id.action_settings){
-//            Intent intent = new Intent(getActivity(), SetingsActivity.class);
-//            startActivity(intent);
-//
-//        }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void atualizaTempo(){
-
-        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask();
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        String location = sharedPreferences.getString(getString(R.string.pref_location_key), getString(R.string.pref_location_default));
-        fetchWeatherTask.execute(location);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        atualizaTempo();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+        // Create some dummy data for the ListView.  Here's a sample weekly forecast
+        String[] data = {
+                "Mon 6/23 - Sunny - 31/17",
+                "Tue 6/24 - Foggy - 21/8",
+                "Wed 6/25 - Cloudy - 22/17",
+                "Thurs 6/26 - Rainy - 18/11",
+                "Fri 6/27 - Foggy - 21/10",
+                "Sat 6/28 - TRAPPED IN WEATHERSTATION - 23/18",
+                "Sun 6/29 - Sunny - 20/7"
+        };
+        List<String> weekForecast = new ArrayList<String>(Arrays.asList(data));
 
+        // Now that we have some dummy forecast data, create an ArrayAdapter.
+        // The ArrayAdapter will take data from a source (like our dummy forecast) and
+        // use it to populate the ListView it's attached to.
         mForecastAdapter =
                 new ArrayAdapter<String>(
                         getActivity(), // The current context (this activity)
                         R.layout.item_lista, // The name of the layout ID.
                         R.id.list_item_forecast_textview, // The ID of the textview to populate.
-                        new ArrayList<String>());
-
+                        weekForecast);
 
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
+
+        // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                Intent intent = new Intent(getActivity(), DetailActvity.class);
-                TextView tv = (TextView) view.findViewById(R.id.list_item_forecast_textview);
-                String message = tv.getText().toString();
-                intent.putExtra(intent.EXTRA_TEXT, message);
-                startActivity(intent);
-            }
-        });
 
         return rootView;
     }
 
-
-
-
     public class FetchWeatherTask extends AsyncTask<String, Void, String[]> {
-
-
 
         private final String LOG_TAG = FetchWeatherTask.class.getSimpleName();
 
@@ -141,30 +110,15 @@ public class SecondFragment extends Fragment {
         private String getReadableDateString(long time){
             // Because the API returns a unix timestamp (measured in seconds),
             // it must be converted to milliseconds in order to be converted to valid date.
-            Date date = new Date(time*1000);
-            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE, dd MMM");
-            return shortenedDateFormat.format(date).toString();
+            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE dd MMM");
+            return shortenedDateFormat.format(time);
         }
 
         /**
-         * Extrai a temperatura minima e máxima.
+         * Prepare the weather high/lows for presentation.
          */
         private String formatHighLows(double high, double low) {
             // For presentation, assume the user doesn't care about tenths of a degree.
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String unitType = sharedPreferences.getString(
-                    getString(R.string.pref_units_key),
-                    getString(R.string.pref_units_metric));
-
-            if (unitType.equals(getString(R.string.pref_units_imperial)))
-                     {
-                         high = (high * 1.8) + 32;
-                         low = (low * 1.8) + 32;
-            }else if (!unitType.equals(getString(R.string.pref_units_label_metric))){
-                Log.d(LOG_TAG, "Tipo de unidade não encontrada: " + unitType);
-
-            }
-
             long roundedHigh = Math.round(high);
             long roundedLow = Math.round(low);
 
@@ -179,7 +133,7 @@ public class SecondFragment extends Fragment {
          * Fortunately parsing is easy:  constructor takes the JSON string and converts it
          * into an Object hierarchy for us.
          */
-        public String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
+        private String[] getWeatherDataFromJson(String forecastJsonStr, int numDays)
                 throws JSONException {
 
             // These are the names of the JSON objects that need to be extracted.
@@ -190,12 +144,13 @@ public class SecondFragment extends Fragment {
             final String OWM_MIN = "min";
             final String OWM_DESCRIPTION = "main";
 
+            JSONObject forecastJson = new JSONObject(forecastJsonStr);
+            JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
-            JSONObject forecastJson = new JSONObject(forecastJsonStr);//pega todos os dados do json
-            JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);//pega tudo abaixo de list e armazena no array
             JSONObject nomecidade = forecastJson.getJSONObject("city");
-            nomeCidade = nomecidade.getString("name");
-            System.out.println(nomeCidade);//só pra ver se tá saindo o nome da cidade :D
+            String nomeCidade = nomecidade.getString("name");
+            System.out.println(nomeCidade);
+
             // OWM returns daily forecasts based upon the local time of the city that is being
             // asked for, which means that we need to know the GMT offset to translate this data
             // properly.
@@ -213,17 +168,7 @@ public class SecondFragment extends Fragment {
             // now we work exclusively in UTC
             dayTime = new Time();
 
-            //pega o nome da cidade em forma de texto;
-            JSONObject cidade = nomecidade;
-
             String[] resultStrs = new String[numDays];
-
-            SharedPreferences sharedPrefs =
-                    PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String unitType = sharedPrefs.getString(
-                    getString(R.string.pref_units_key),
-                    getString(R.string.pref_units_metric));
-
             for(int i = 0; i < weatherArray.length(); i++) {
                 // For now, using the format "Day, description, hi/low"
                 String day;
@@ -231,7 +176,6 @@ public class SecondFragment extends Fragment {
                 String highAndLow;
 
                 // Get the JSON object representing the day
-
                 JSONObject dayForecast = weatherArray.getJSONObject(i);
 
                 // The date/time is returned as a long.  We need to convert that
@@ -281,7 +225,7 @@ public class SecondFragment extends Fragment {
             String format = "json";
             String units = "metric";
             int numDays = 7;
-            String appid = "voce precisa arrumar uma chave propria";
+            String appid = "427f62014a9ec86f4d52844e57f5cefd";
 
             try {
                 // Construct the URL for the OpenWeatherMap query
@@ -300,23 +244,23 @@ public class SecondFragment extends Fragment {
                         .appendQueryParameter(FORMAT_PARAM, format)
                         .appendQueryParameter(UNITS_PARAM, units)
                         .appendQueryParameter(DAYS_PARAM, Integer.toString(numDays))
-                        .appendQueryParameter(APPID_PARAM, appid)
+                        .appendQueryParameter(APPID_PARAM,appid)
                         .build();
 
                 URL url = new URL(builtUri.toString());
 
                 Log.v(LOG_TAG, "Built URI " + builtUri.toString());
 
-                // Criar a requisição para OpenWeatherMap, e abre a conexão
+                // Create the request to OpenWeatherMap, and open the connection
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
 
-                // Lê o input stream dentro da String
+                // Read the input stream into a String
                 InputStream inputStream = urlConnection.getInputStream();
                 StringBuffer buffer = new StringBuffer();
                 if (inputStream == null) {
-                    //não faz nada
+                    // Nothing to do.
                     return null;
                 }
                 reader = new BufferedReader(new InputStreamReader(inputStream));
@@ -368,14 +312,11 @@ public class SecondFragment extends Fragment {
         @Override
         protected void onPostExecute(String[] result) {
             if (result != null) {
-                //Exibe o nome da cidade!
-            TextView tv = (TextView) getView().findViewById(R.id.textview_cidade);
-            tv.setText(nomeCidade);
-               mForecastAdapter.clear();
-                for(
-                        String dayForecastStr : result) {
+                mForecastAdapter.clear();
+                for(String dayForecastStr : result) {
                     mForecastAdapter.add(dayForecastStr);
                 }
+                // New data is back from the server.  Hooray!
             }
         }
     }
