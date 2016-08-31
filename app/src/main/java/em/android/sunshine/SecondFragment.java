@@ -146,6 +146,9 @@ public class SecondFragment extends Fragment {
 
             JSONObject forecastJson = new JSONObject(forecastJsonStr);
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
+            JSONObject nomecidade = forecastJson.getJSONObject("city");
+            String nomeCidade = nomecidade.getString("name");
+            System.out.println(nomeCidade);
 
             // OWM returns daily forecasts based upon the local time of the city that is being
             // asked for, which means that we need to know the GMT offset to translate this data
