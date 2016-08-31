@@ -34,13 +34,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import android.widget.TextView;
 
 /**
  * Created by emanu on 15/08/2016.
  */
 public class SecondFragment extends Fragment {
     private ArrayAdapter<String> mForecastAdapter;
-    private String nomeCidade;
+    private  String nomeCidade;
 
 
     public SecondFragment() {
@@ -164,7 +165,7 @@ public class SecondFragment extends Fragment {
             JSONArray weatherArray = forecastJson.getJSONArray(OWM_LIST);
 
             JSONObject nomecidade = forecastJson.getJSONObject("city");
-            String nomeCidade = nomecidade.getString("name");
+            nomeCidade = nomecidade.getString("name");
             System.out.println(nomeCidade);
 
             // OWM returns daily forecasts based upon the local time of the city that is being
@@ -321,7 +322,6 @@ public class SecondFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            // This will only happen if there was an error getting or parsing the forecast.
             return null;
         }
 
@@ -332,7 +332,9 @@ public class SecondFragment extends Fragment {
                 for(String dayForecastStr : result) {
                     mForecastAdapter.add(dayForecastStr);
                 }
-                // New data is back from the server.  Hooray!
+
+                TextView tv = (TextView) getView().findViewById(R.id.textview_cidade);
+                tv.setText(nomeCidade);
             }
         }
     }

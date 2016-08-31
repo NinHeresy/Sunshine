@@ -9,6 +9,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class SetingsActivity extends PreferenceActivity
         implements Preference.OnPreferenceChangeListener {
 
@@ -19,7 +21,13 @@ public class SetingsActivity extends PreferenceActivity
         addPreferencesFromResource(R.xml.pref_geral);
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_location_key)));
         bindPreferenceSummaryToValue(findPreference(getString(R.string.pref_units_key)));
+
     }
+
+//    @Override
+//    public void onBuildHeaders(List<Header> target) {
+//        loadHeadersFromResource(R.xml.pref_geral, target);
+//    }
 
     /**
      * Attaches a listener so the summary is always updated with the preference value.
