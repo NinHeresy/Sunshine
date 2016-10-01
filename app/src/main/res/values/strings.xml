@@ -18,6 +18,7 @@
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_detail_actvity">DetailActvity</string>
     <string name="pref_location_label">Localização</string>
+
     <string name="pref_location_key" translatable="false">localizacao</string>
     <string name="pref_location_default" translatable="false">94043</string>
 

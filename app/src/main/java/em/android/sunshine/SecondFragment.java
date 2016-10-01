@@ -101,6 +101,8 @@ public class SecondFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override

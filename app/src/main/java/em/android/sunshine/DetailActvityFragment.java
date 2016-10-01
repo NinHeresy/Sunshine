@@ -17,9 +17,7 @@ import android.widget.TextView;
 /**
  * A placeholder fragment containing a simple view.
  */
-/**
- * A placeholder fragment containing a simple view.
- */
+
 public class DetailActvityFragment extends Fragment {
 
     private static final String LOG_TAG = DetailActvityFragment.class.getSimpleName();
