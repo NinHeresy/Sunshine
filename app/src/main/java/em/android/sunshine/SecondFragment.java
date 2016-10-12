@@ -28,8 +28,10 @@ import em.android.sunshine.utility.Utility;
  * Created by emanu on 15/08/2016.
  */
 public class SecondFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-    private  static final int FORECAST_LOADER = 0;
 
+    private static final int FORECAST_LOADER = 0;
+    // For the forecast view we're showing only a small subset of the stored data.
+    // Specify the columns we need.
     private static final String[] FORECAST_COLUMNS = {
             // In this case the id needs to be fully qualified with a table name, since
             // the content provider joins the location & weather tables in the background
@@ -60,8 +62,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     static final int COL_COORD_LAT = 7;
     static final int COL_COORD_LONG = 8;
 
-    ForecastAdapter mForecastAdapter;
-
+    private ForecastAdapter mForecastAdapter;
 
     public SecondFragment() {
     }
@@ -84,52 +85,26 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.refresh) {
-            atualizaTempo();
+        if (id == R.id.action_refresh) {
+            updateWeather();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    private void atualizaTempo() {
-
-        FetchWeatherTask fetchWeatherTask = new FetchWeatherTask(getActivity());
-        String location = Utility.getPreferredLocation(getActivity());
-        fetchWeatherTask.execute(location);
-
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        atualizaTempo();
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        String locationSetting = Utility.getPreferredLocation(getActivity());
-
-        // Sort order:  Ascending, by date.
-        String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
-        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
-                locationSetting, System.currentTimeMillis());
-
-        Cursor cur = getActivity().getContentResolver().query(weatherForLocationUri,
-                null, null, null, sortOrder);
-
-        // The CursorAdapter will take data from our cursor and populate the ListView
-        // However, we cannot use FLAG_AUTO_REQUERY since it is deprecated, so we will end
-        // up with an empty list the first time we run.
-        mForecastAdapter = new ForecastAdapter(getActivity(), cur, 0);
-
+        // The CursorAdapter will take data from our cursor and populate the ListView.
+        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
 
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
+
+        // Get a reference to the ListView, and attach this adapter to it.
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);
 
-
+        // We'll call our MainActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
@@ -150,19 +125,36 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         return rootView;
     }
 
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        getLoaderManager().initLoader(FORECAST_LOADER, null, this);
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    private void updateWeather() {
+        FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
+        String location = Utility.getPreferredLocation(getActivity());
+        weatherTask.execute(location);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateWeather();
+    }
 
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
-        String locationSettings = Utility.getPreferredLocation(getActivity());
+        String locationSetting = Utility.getPreferredLocation(getActivity());
 
-        String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + "ASC";
-        Uri  weatherForLocationURI = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
-                locationSettings, System.currentTimeMillis()
-        );
+        // Sort order:  Ascending, by date.
+        String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATE + " ASC";
+        Uri weatherForLocationUri = WeatherContract.WeatherEntry.buildWeatherLocationWithStartDate(
+                locationSetting, System.currentTimeMillis());
 
         return new CursorLoader(getActivity(),
-                weatherForLocationURI,
-                null,
+                weatherForLocationUri,
+                FORECAST_COLUMNS,
                 null,
                 null,
                 sortOrder);
@@ -171,7 +163,6 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mForecastAdapter.swapCursor(cursor);
-
     }
 
     @Override
