@@ -27,17 +27,13 @@ public class DetailActvity extends AppCompatActivity {
                     .commit();
         }
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.detail, menu);
         return true;
     }
 
@@ -51,8 +47,10 @@ public class DetailActvity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            startActivity(new Intent(this, SetingsActivity.class));
             return true;
         }
+
         return super.onOptionsItemSelected(item);
     }
 
