@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:baselineAligned="false">
 
     <ImageView
         android:layout_width="wrap_content"
@@ -34,19 +35,22 @@
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        >
+        android:layout_weight="0.09"
+        android:textAlignment="center">
 
         <TextView
             android:text="8"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_high_textview" />
+            android:id="@+id/list_item_high_textview"
+            android:textAlignment="center" />
 
         <TextView
             android:text="10"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/list_item_low_textview" />
+            android:id="@+id/list_item_low_textview"
+            android:textAlignment="center" />
     </LinearLayout>
 
 </LinearLayout>

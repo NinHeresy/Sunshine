@@ -4,16 +4,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     tools:ignore="DisableBaselineAlignment">
 
+<!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+    <!--<TextView-->
+        <!--android:id="@+id/name_of_city"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:padding="10dp"-->
+        <!--android:text="pale ale"/>-->
+<!--</LinearLayout>-->
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-
         android:layout_gravity="center"
         >
 
@@ -52,17 +66,19 @@
         tools:ignore="UseCompoundDrawables">
 
         <ImageView
-            android:layout_width="136dp"
-            android:layout_height="120dp"
+            android:layout_width="119dp"
+            android:layout_height="80dp"
             app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/list_item_icon"
             android:layout_gravity="center"/>
         <TextView
             android:text="Clear"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="32dp"
             android:id="@+id/list_item_forecast_textview"
             android:gravity="center"/>
+
+    </LinearLayout>
 
     </LinearLayout>
 
