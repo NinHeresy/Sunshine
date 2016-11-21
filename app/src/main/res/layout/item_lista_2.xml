@@ -10,7 +10,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/list_item_icon" />
+        android:id="@+id/list_item_icon"
+        android:contentDescription="@string/icone_detalhe_temperatura" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,13 +20,13 @@
         android:layout_weight="1">
 
         <TextView
-            android:text="Tomorrow"
+            android:text="@string/tomorrow"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_date_textview" />
 
         <TextView
-            android:text="Clear"
+            android:text="@string/clear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_forecast_textview"/>
@@ -39,14 +40,14 @@
         android:textAlignment="center">
 
         <TextView
-            android:text="8"
+            android:text="@string/min_temperature_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_high_textview"
             android:textAlignment="center" />
 
         <TextView
-            android:text="10"
+            android:text="@string/max_temperature_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_low_textview"

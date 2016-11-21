@@ -1,9 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
+    android:name="em.android.sunshine.ForecastFragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".MainActivity"
-    tools:ignore="MergeRootFrame" >
-
-</FrameLayout>
+    android:layout_height="wrap_content"
+    />

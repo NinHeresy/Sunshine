@@ -13,10 +13,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import em.android.sunshine.ForecastFragment;
 import em.android.sunshine.R;
 
 import em.android.sunshine.utility.Utility;
-import em.android.sunshine.SecondFragment;
 
 /**
  * {@link ForecastAdapter} exposes a list of weather forecasts
@@ -31,24 +31,9 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_COUNT = 2;
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
+    private boolean mUseTodayLayout = true;
 
-//    private String formatHighLows(double high, double low) {
-//        boolean isMetric = Utility.isMetric(mContext);
-//        String highLowStr = Utility.formatTemperature(high, isMetric) + "/" + Utility.formatTemperature(low, isMetric);
-//        return highLowStr;
-//    }
 
-    /*  This is ported from FetchWeatherTask --- but now we go straight from the cursor to the
-        string. */
-//    private String convertCursorRowToUXFormat(Cursor cursor) {
-//        String highAndLow = formatHighLows(
-//                cursor.getDouble(SecondFragment.COL_WEATHER_MAX_TEMP),
-//                cursor.getDouble(SecondFragment.COL_WEATHER_MIN_TEMP));
-//
-//        return Utility.formatDate(cursor.getLong(SecondFragment.COL_WEATHER_DATE)) +
-//                " - " + cursor.getString(SecondFragment.COL_WEATHER_DESC) +
-//                " - " + highAndLow;
-//    }
 
     @Override
     public int getItemViewType(int position) {
@@ -65,15 +50,14 @@ public class ForecastAdapter extends CursorAdapter {
         ViewHolder viewHolder = (ViewHolder) view.getTag();
 
 
-        int weatherId = cursor.getInt(SecondFragment.COL_WEATHER_CONDITION_ID);
+        int weatherId = cursor.getInt(ForecastFragment.COL_WEATHER_CONDITION_ID);
         viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
-        // Use placeholder image for now
-       // viewHolder.iconView.setImageResource(R.drawable.ic_launcher);
 
-        long dateInMillis = cursor.getLong(SecondFragment.COL_WEATHER_DATE);
+
+        long dateInMillis = cursor.getLong(ForecastFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(context, dateInMillis));
 
-        String description = cursor.getString(SecondFragment.COL_WEATHER_DESC);
+        String description = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
         viewHolder.descriptionView.setText(description);
 
 //        String nameOfCity = cursor.getString(SecondFragment.COL_CITY_NAME);
@@ -83,13 +67,17 @@ public class ForecastAdapter extends CursorAdapter {
         boolean isMetric = Utility.isMetric(context);
 
         // Read high temperature from cursor
-        double high = cursor.getDouble(SecondFragment.COL_WEATHER_MAX_TEMP);
-        viewHolder.highTempView.setText(Utility.formatTemperature(context, high, isMetric));
+        double high = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
+        viewHolder.highTempView.setText(Utility.formatTemperature(context, high));
 
-        double low = cursor.getDouble(SecondFragment.COL_WEATHER_MIN_TEMP);
-        viewHolder.lowTempView.setText(Utility.formatTemperature(context, low, isMetric));
+        double low = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
+        viewHolder.lowTempView.setText(Utility.formatTemperature(context, low));
 
 
+    }
+
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
     }
 
     /*

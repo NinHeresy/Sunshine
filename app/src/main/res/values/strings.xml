@@ -2,7 +2,7 @@
     <string name="app_name">Sunshine</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
     <string name="tempo">Hoje - Domingo - 22º </string>
     <string name="refresh">Atualizar</string>
     <string name="chave_api_tempo" translatable="false">427f62014a9ec86f4d52844e57f5cefd</string>
@@ -24,43 +24,75 @@
 
 
     <string name="pref_units_label">Temperature Units</string>
-    <string name="pref_units_label_metric">Metric</string>
-    <string name="pref_units_label_imperial">Imperial</string>
+    <string name="pref_units_label_metric">Sistema métrico</string>
+    <string name="pref_units_label_imperial">Sistema imperial</string>
     <string name="pref_units_key" translatable="false">units</string>
     <string name="pref_units_metric" translatable="false">metric</string>
     <string name="pref_units_imperial" translatable="false">imperial</string>
     <string name="menu_item_share">menu item share</string>
 
     <string name="content_authority">em.android.sunshine</string>
+    <string name="sync_account_type">em.android.sunshine</string>
 
-    <!--Days of week-->
-    <string name="Sunday">Sunday</string>
-    <string name="Monday">Monday</string>
-    <string name="Tuesday">Tuesday</string>
-    <string name="Wednesday">Wednesday</string>
-    <string name="Thursday">Thursday</string>
-    <string name="Friday">Friday</string>
-    <string name="Saturday">Saturday</string>
+    <!--Dias da semanaa-->
+    <string name="Sunday">Domingo</string>
+    <string name="Monday">Segunda - Feira</string>
+    <string name="Tuesday">Terça - Feira</string>
+    <string name="Wednesday">Quarta - Feira</string>
+    <string name="Thursday">Quinta - Feira</string>
+    <string name="Friday">Sexta - Feira</string>
+    <string name="Saturday">Sábado</string>
 
-    <!-- Date label when displaying today's weather forecast [CHAR LIMIT=20] -->
-    <string name="today">Today</string>
-    <string name="clear">Clear</string>
+    <!-- Dados dos texts views que sao exibidos para o tempo do dia [CHAR LIMIT=20] -->
+    <string name="today">Hoje</string>
+    <string name="clear">Claro</string>
 
-    <!-- Date label when displaying tomorrow's weather forecast [CHAR LIMIT=20] -->
-    <string name="tomorrow">Tomorrow</string>
+    <!-- DAdo que é exibido para o dia de amanhã [CHAR LIMIT=20] -->
+    <string name="tomorrow">Amanhã</string>
 
-    <!-- Date format for displaying day of week and date (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
+    <!-- Formaoto de data que é exibido para os dias seguintes com o nome da semana e mes [CHAR LIMIT=20] -->
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
-    <string name="format_wind_mph">Wind: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
-    <!-- Wind in kph [CHAR LIMIT=25] -->
-    <string name="format_wind_kmh">Wind: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
+    <!--velocidade do bento em milhas/h [CHAR LIMIT=25] -->
+    <string name="format_wind_mph">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
 
-    <!-- Pressure format CHAR LIMIT=25] -->
-    <string name="format_pressure">Pressure: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
+    <!--velocidade do bento em km/h [CHAR LIMIT=25] -->
+    <string name="format_wind_kmh">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
 
-    <!-- Humidity format CHAR LIMIT=25]-->
+    <!-- formato pressão CHAR LIMIT=25] -->
+    <string name="format_pressure">Pressão: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
+
+    <!-- formato de humidade CHAR LIMIT=25]-->
     <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
+
+    <!-- para notificar o recebimento de notificações -->
+    <string name="pref_enable_notifications_key" translatable="false">enable_notifications</string>
+    <string name="pref_enable_notifications_label">Notificação do tempo</string>
+
+    <!-- nome da chave para armazenar as SharedPreferences -->
+    <string name="pref_location_status_key" translatable="false">loc-status</string>
+
+    <string name="pref_enable_notifications_true">Habilitado</string>
+    <string name="pref_enable_notifications_false">Desabilitado</string>
+    <string name="pref_enable_notifications_default" translatable="false">true</string>
+
+    <!-- Formato das notificaçoes -->
+    <string name="format_notification">Forecast: <xliff:g id="condition">%1$s</xliff:g> High: <xliff:g id="high">%2$s</xliff:g> Low: <xliff:g id="low">%3$s</xliff:g></string>
+
+    <!-- Strings related to Notification preference -->
+    <string name="pref_last_notification">last_notification</string>
+
+    <!-- Empty Weather Database -->
+    <string name="empty_forecast_list">Não existem informações a serem exibidas</string>
+    <string name="empty_forecast_list_no_network">Não há conexao com a internet</string>
+    <string name="empty_forecast_list_server_down">Não existem informações a serem exibidas</string>
+    <string name="empty_forecast_list_server_error">Não existem informações a serem exibidas</string>
+    <string name="max_temperature_detail">10</string>
+    <string name="min_temperature_detail">8</string>
+    <string name="type_time_detail">Clear</string>
+    <string name="date_detail">Today, 17/10/2016</string>
+    <string name="icone_detalhe_temperatura">icone_detalhe_temperatura</string>
+
 
 </resources>

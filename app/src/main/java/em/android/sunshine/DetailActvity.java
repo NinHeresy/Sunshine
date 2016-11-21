@@ -22,13 +22,20 @@ public class DetailActvity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_actvity);
 
         if (savedInstanceState == null) {
+            // Create the detail fragment and add it to the activity
+            // using a fragment transaction.
+
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(DetailActvityFragment.DETAIL_URI, getIntent().getData());
+
+            DetailActvityFragment fragment = new DetailActvityFragment();
+            fragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment, new DetailActvityFragment())
+                    .add(R.id.weather_detail_container, fragment)
                     .commit();
         }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -37,23 +44,18 @@ public class DetailActvity extends AppCompatActivity {
         return true;
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             startActivity(new Intent(this, SetingsActivity.class));
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
-
 
 }
 
