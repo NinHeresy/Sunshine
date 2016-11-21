@@ -86,8 +86,8 @@
     <!-- Empty Weather Database -->
     <string name="empty_forecast_list">Não existem informações a serem exibidas</string>
     <string name="empty_forecast_list_no_network">Não há conexao com a internet</string>
-    <string name="empty_forecast_list_server_down">Não existem informações a serem exibidas</string>
-    <string name="empty_forecast_list_server_error">Não existem informações a serem exibidas</string>
+    <string name="empty_forecast_list_server_down">Servidor fora do ar</string>
+    <string name="empty_forecast_list_server_error">Erro de acesso ao servidor</string>
     <string name="max_temperature_detail">10</string>
     <string name="min_temperature_detail">8</string>
     <string name="type_time_detail">Clear</string>
