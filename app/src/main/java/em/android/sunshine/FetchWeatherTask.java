@@ -58,7 +58,7 @@ public class FetchWeatherTask extends AsyncTask<String, Void, Void> {
     long addLocation(String locationSetting, String cityName, double lat, double lon) {
         long locationId;
 
-        // First, check if the location with this city name exists in the db
+        // primeiro checa se existe a localização com o nome da cidade informado
         Cursor locationCursor = mContext.getContentResolver().query(
                 WeatherContract.LocationEntry.CONTENT_URI,
                 new String[]{WeatherContract.LocationEntry._ID},

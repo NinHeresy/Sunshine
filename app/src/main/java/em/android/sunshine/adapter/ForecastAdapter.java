@@ -76,9 +76,6 @@ public class ForecastAdapter extends CursorAdapter {
         String description = cursor.getString(SecondFragment.COL_WEATHER_DESC);
         viewHolder.descriptionView.setText(description);
 
-//        String nameOfCity = cursor.getString(SecondFragment.COL_CITY_NAME);
-//        viewHolder.cityNames.setText(nameOfCity);
-
         // Read user preference for metric or imperial temperature units
         boolean isMetric = Utility.isMetric(context);
 
@@ -120,6 +117,7 @@ public class ForecastAdapter extends CursorAdapter {
         This is where we fill-in the views with the contents of the cursor.
      */
     public static class ViewHolder {
+        public final TextView cityNames;
         public final ImageView iconView;
         public final TextView dateView;
         public final TextView descriptionView;
@@ -128,6 +126,7 @@ public class ForecastAdapter extends CursorAdapter {
         //public final TextView cityNames;
 
         public ViewHolder(View view) {
+            cityNames = (TextView) view.findViewById(R.id.list_item_cityname_textview);
             iconView = (ImageView) view.findViewById(R.id.list_item_icon);
             dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
             descriptionView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
