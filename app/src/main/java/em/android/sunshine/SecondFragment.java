@@ -24,6 +24,8 @@ import em.android.sunshine.adapter.ForecastAdapter;
 import em.android.sunshine.data.WeatherContract;
 import em.android.sunshine.utility.Utility;
 
+import em.android.sunshine.service.SunshineService;
+
 /**
  * Created by emanu on 15/08/2016.
  */
@@ -137,9 +139,14 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     private void updateWeather() {
-        FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
-        String location = Utility.getPreferredLocation(getActivity());
-        weatherTask.execute(location);
+//        FetchWeatherTask weatherTask = new FetchWeatherTask(getActivity());
+//        String location = Utility.getPreferredLocation(getActivity());
+//        weatherTask.execute(location);
+
+        Intent intent = new Intent(getActivity(), SunshineService.class);
+                intent.putExtra(SunshineService.LOCATION_QUERY_EXTRA,
+                        Utility.getPreferredLocation(getActivity()));
+                getActivity().startService(intent);
     }
 
     @Override

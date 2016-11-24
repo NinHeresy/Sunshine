@@ -7,14 +7,14 @@
     <string name="refresh">Atualizar</string>
     <string name="chave_api_tempo" translatable="false">427f62014a9ec86f4d52844e57f5cefd</string>
     <string name="title_activity_detail">DetailActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
     <string name="select_location_of_map">Localizao do mapa</string>
     <string name="share">Compartilhar</string>
 
     <string name="title_activity_detail2">DetailActivity2</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="navigation_drawer_open">Abrir mapa</string>
+    <string name="navigation_drawer_close">Fechar mapa</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="title_activity_detail_actvity">DetailActvity</string>
     <string name="pref_location_label">Localização</string>
@@ -23,8 +23,8 @@
     <string name="pref_location_default" translatable="false">94043</string>
 
 
-    <string name="pref_units_label">Temperature Units</string>
-    <string name="pref_units_label_metric">Metric</string>
+    <string name="pref_units_label">Unidade de temperatura</string>
+    <string name="pref_units_label_metric">Métrico</string>
     <string name="pref_units_label_imperial">Imperial</string>
     <string name="pref_units_key" translatable="false">units</string>
     <string name="pref_units_metric" translatable="false">metric</string>
@@ -34,33 +34,33 @@
     <string name="content_authority">em.android.sunshine</string>
 
     <!--Days of week-->
-    <string name="Sunday">Sunday</string>
-    <string name="Monday">Monday</string>
-    <string name="Tuesday">Tuesday</string>
-    <string name="Wednesday">Wednesday</string>
-    <string name="Thursday">Thursday</string>
-    <string name="Friday">Friday</string>
-    <string name="Saturday">Saturday</string>
+    <string name="Sunday">Domingo</string>
+    <string name="Monday">Segunda - Feira</string>
+    <string name="Tuesday">Terça - Feira</string>
+    <string name="Wednesday">Quarta - Feira</string>
+    <string name="Thursday">Quinta - Feira</string>
+    <string name="Friday">Sexta - Feira</string>
+    <string name="Saturday">Sabado</string>
 
     <!-- Date label when displaying today's weather forecast [CHAR LIMIT=20] -->
-    <string name="today">Today</string>
-    <string name="clear">Clear</string>
+    <string name="today">Hoje</string>
+    <string name="clear">Claro</string>
 
     <!-- Date label when displaying tomorrow's weather forecast [CHAR LIMIT=20] -->
-    <string name="tomorrow">Tomorrow</string>
+    <string name="tomorrow">Amanhã</string>
 
     <!-- Date format for displaying day of week and date (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
-    <string name="format_wind_mph">Wind: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_wind_mph">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
     <!-- Wind in kph [CHAR LIMIT=25] -->
-    <string name="format_wind_kmh">Wind: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_wind_kmh">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
 
     <!-- Pressure format CHAR LIMIT=25] -->
-    <string name="format_pressure">Pressure: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
+    <string name="format_pressure">Pressão: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
 
     <!-- Humidity format CHAR LIMIT=25]-->
-    <string name="format_humidity">Humidity: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
+   <string name="format_humidity">Humidade: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
 
 </resources>

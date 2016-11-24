@@ -36,7 +36,7 @@
             android:exported="false"
             android:syncable="true" />
 
-        <service android:name=".service.SunshineService"/>
+        <service android:name="em.android.sunshine.service.SunshineService"/>
 
 
     </application>
