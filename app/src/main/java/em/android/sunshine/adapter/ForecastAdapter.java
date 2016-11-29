@@ -32,23 +32,6 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
 
-//    private String formatHighLows(double high, double low) {
-//        boolean isMetric = Utility.isMetric(mContext);
-//        String highLowStr = Utility.formatTemperature(high, isMetric) + "/" + Utility.formatTemperature(low, isMetric);
-//        return highLowStr;
-//    }
-
-    /*  This is ported from FetchWeatherTask --- but now we go straight from the cursor to the
-        string. */
-//    private String convertCursorRowToUXFormat(Cursor cursor) {
-//        String highAndLow = formatHighLows(
-//                cursor.getDouble(SecondFragment.COL_WEATHER_MAX_TEMP),
-//                cursor.getDouble(SecondFragment.COL_WEATHER_MIN_TEMP));
-//
-//        return Utility.formatDate(cursor.getLong(SecondFragment.COL_WEATHER_DATE)) +
-//                " - " + cursor.getString(SecondFragment.COL_WEATHER_DESC) +
-//                " - " + highAndLow;
-//    }
 
     @Override
     public int getItemViewType(int position) {
@@ -68,7 +51,7 @@ public class ForecastAdapter extends CursorAdapter {
         int weatherId = cursor.getInt(SecondFragment.COL_WEATHER_CONDITION_ID);
         viewHolder.iconView.setImageResource(Utility.getIconResourceForWeatherCondition(weatherId));
         // Use placeholder image for now
-       // viewHolder.iconView.setImageResource(R.drawable.ic_launcher);
+        // viewHolder.iconView.setImageResource(R.drawable.ic_launcher);
 
         long dateInMillis = cursor.getLong(SecondFragment.COL_WEATHER_DATE);
         viewHolder.dateView.setText(Utility.getFriendlyDayString(context, dateInMillis));
@@ -136,4 +119,3 @@ public class ForecastAdapter extends CursorAdapter {
         }
     }
 }
-

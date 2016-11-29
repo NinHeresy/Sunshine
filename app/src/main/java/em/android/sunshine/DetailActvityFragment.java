@@ -26,9 +26,7 @@ import java.net.URI;
 import em.android.sunshine.data.WeatherContract;
 import em.android.sunshine.utility.Utility;
 import em.android.sunshine.data.WeatherContract.WeatherEntry;
-
-
-/**
+/*
  * A placeholder fragment containing a simple view.
  */
 
@@ -215,6 +213,4 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader) { }
-
-
 }

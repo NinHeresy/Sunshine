@@ -32,6 +32,7 @@
     <string name="menu_item_share">menu item share</string>
 
     <string name="content_authority">em.android.sunshine</string>
+    <string name="sync_account_type">sunshine.android.em</string>
 
     <!--Days of week-->
     <string name="Sunday">Domingo</string>

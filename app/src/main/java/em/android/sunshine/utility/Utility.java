@@ -70,7 +70,7 @@ public class Utility {
             return getDayName(context, dateInMillis);
         } else {
             // Otherwise, use the form "Mon Jun 3"
-            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEE MMM dd");
+            SimpleDateFormat shortenedDateFormat = new SimpleDateFormat("EEEE, dd  MMMM");
             return shortenedDateFormat.format(dateInMillis);
         }
     }
@@ -91,7 +91,7 @@ public class Utility {
             Time time = new Time();
             time.setToNow();
             // Otherwise, the format is just the day of the week (e.g "Wednesday".
-            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE");
+            SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE, dd MMMM");
             return dayFormat.format(dateInMillis);
         }
     }
