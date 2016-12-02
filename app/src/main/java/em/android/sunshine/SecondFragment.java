@@ -13,6 +13,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -34,7 +35,7 @@ import  em.android.sunshine.sync.SunshineSyncAdapter;
  * Created by emanu on 15/08/2016.
  */
 public class SecondFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
-
+    public static final String LOG_TAG = SecondFragment.class.getSimpleName();
     private static final int FORECAST_LOADER = 0;
     // For the forecast view we're showing only a small subset of the stored data.
     // Specify the columns we need.
@@ -88,7 +89,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.fore_cast_menu, menu);
+        //inflater.inflate(R.menu.fore_cast_menu, menu);
     }
 
     @Override
@@ -96,14 +97,40 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+      //removi o refresh pq o ato de atualizar está designado à classe syncAdapter
         int id = item.getItemId();
-        if (id == R.id.action_refresh) {
-            updateWeather();
+        if(id == R.id.abre_mapa){
+            openPreferredLocationInMap();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+
+    private void openPreferredLocationInMap() {
+        // Using the URI scheme for showing a location found on a map.  This super-handy
+        // intent can is detailed in the "Common Intents" page of Android's developer site:
+        // http://developer.android.com/guide/components/intents-common.html#Maps
+        if ( null != mForecastAdapter ) {
+            Cursor c = mForecastAdapter.getCursor();
+            if ( null != c ) {
+                c.moveToPosition(0);
+                String posLat = c.getString(COL_COORD_LAT);
+                String posLong = c.getString(COL_COORD_LONG);
+                Uri geoLocation = Uri.parse("geo:" + posLat + "," + posLong);
+
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(geoLocation);
+
+                if (intent.resolveActivity(getActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Log.d(LOG_TAG, "impossivel chaar " + geoLocation.toString() + ", não há aplicativo instalado!");
+                }
+            }
+
+        }
+    }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -111,7 +138,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
 
-        //exibir o nome da cidade
+        //exibir o nome da cidade *tem que ser feito aqui porque ela só será carregada uma vez!!!
         String locationQuery = Utility.getPreferredLocation(getContext());
         Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(locationQuery, System.currentTimeMillis());
         Cursor cursor = getContext().getContentResolver().query(weatherUri, FORECAST_COLUMNS, null, null, null);
@@ -124,7 +151,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
 
 
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
-        listView.setAdapter(mForecastAdapter);
+        listView.setAdapter(mForecastAdapter); //preencherá a lista com informaçoes do adaptador
 
         // We'll call our MainActivity
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

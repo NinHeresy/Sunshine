@@ -1,5 +1,6 @@
 <!-- Master layout. -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -14,14 +15,16 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="horizontal">
         <TextView
             android:fontFamily="sans-serif-condensed"
             android:id="@+id/detail_day_textview"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="24sp"
-            android:text="@string/today"/>
+            android:text="@string/today"
+            android:textAlignment="center"
+            tools:ignore="UnusedAttribute" />
 
         <TextView
             android:fontFamily="sans-serif-condensed"
@@ -29,7 +32,10 @@
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="16sp"
-            android:text="20 de outubro"/>
+            android:text="@string/_20_de_outubro"
+            android:textAlignment="viewStart"
+            tools:ignore="UnusedAttribute"
+            android:padding="10dp" />
 
         </LinearLayout>
         <!-- Main content: high, low, art, weather state -->
@@ -39,7 +45,7 @@
             android:layout_marginTop="16dp"
             android:layout_width="match_parent"
             android:orientation="horizontal"
-            >
+            android:baselineAligned="false">
 
             <LinearLayout
                 android:layout_height="wrap_content"
@@ -51,7 +57,7 @@
                     android:id="@+id/detail_high_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="24º"
+                    android:text="@string/simulacao_maxima"
                     android:textSize="40sp"
                     android:layout_gravity="center"
                     android:textAlignment="center" />
@@ -60,7 +66,7 @@
                     android:id="@+id/detail_low_textview"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:text="8º"
+                    android:text="@string/simulacao_minima"
                     android:textSize="30sp"
                     android:textAlignment="center" />
 
@@ -73,14 +79,16 @@
                 android:layout_height="wrap_content"
                 android:layout_width="0dp"
                 android:orientation="vertical"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                tools:ignore="UseCompoundDrawables">
 
                 <ImageView
                     android:id="@+id/detail_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher"
-                    android:cropToPadding="false" />
+                    android:cropToPadding="false"
+                    android:contentDescription="@string/texto_condicao_tempo" />
 
                 <TextView
                     android:id="@+id/detail_forecast_textview"
@@ -96,7 +104,7 @@
     android:layout_height="wrap_content" android:orientation="vertical"
     android:layout_margin="10dp">
         <TextView
-            android:text="Umidade"
+            android:text="@string/simulacao_umidade"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_humidity"
@@ -106,7 +114,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
 
         <TextView
-            android:text="Vento"
+            android:text="@string/simulacao_vento"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_wind"
@@ -116,7 +124,7 @@
             android:textAppearance="?android:textAppearanceLarge"/>
 
         <TextView
-            android:text="Pressao"
+            android:text="@string/simulacao_pressao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/list_item_pressure"

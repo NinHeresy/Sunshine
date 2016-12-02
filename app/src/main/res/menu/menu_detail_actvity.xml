@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="em.android.sunshine.DetailActvity">
 
-    <item
-        android:id="@+id/action_refresh"
-        android:orderInCategory="100"
-        android:title="@string/refresh"
-        app:showAsAction="never" />
+    <!--<item-->
+        <!--android:id="@+id/action_refresh"-->
+        <!--android:orderInCategory="100"-->
+        <!--android:title="@string/refresh"-->
+        <!--app:showAsAction="never" />-->
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

@@ -37,6 +37,7 @@
     import java.net.MalformedURLException;
     import java.net.ProtocolException;
     import java.net.URL;
+    import java.util.Calendar;
     import java.util.Vector;
 
     import em.android.sunshine.BuildConfig;
@@ -415,10 +416,15 @@
                     cVVector.toArray(cvArray);
                     getContext().getContentResolver().bulkInsert(WeatherContract.WeatherEntry.CONTENT_URI, cvArray);
 
+                    //remove do banco de dados datas anteriores ao dia atual
+                    getContext().getContentResolver().delete(WeatherContract.WeatherEntry.CONTENT_URI,
+                            WeatherContract.WeatherEntry.COLUMN_DATE + " <= ?",
+                            new String[] {Long.toString(dayTime.setJulianDay(julianStartDay-1))});
+
                     notifyWeather();
                 }
 
-                Log.d(LOG_TAG, "Sync Complete. " + cVVector.size() + " Inserted");
+                Log.d(LOG_TAG, "sincronizacao completa. " + cVVector.size() + " inserida");
 
             } catch (JSONException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);

@@ -44,7 +44,7 @@
     <string name="Saturday">Sabado</string>
 
     <!-- Date label when displaying today's weather forecast [CHAR LIMIT=20] -->
-    <string name="today">Hoje</string>
+    <string name="today">Hoje </string>
     <string name="clear">Claro</string>
 
     <!-- texto para amanha [CHAR LIMIT=20] -->
@@ -76,6 +76,13 @@
     <string name="pref_enable_notifications_true">Ativado</string>
     <string name="pref_enable_notifications_false">Não ativado</string>
     <string name="pref_enable_notifications_default" translatable="false">true</string>
+    <string name="simulacao_maxima">24º</string>
+    <string name="simulacao_minima">8º</string>
+    <string name="texto_condicao_tempo">ícone de condição de tempo</string>
+    <string name="simulacao_pressao">Pressao</string>
+    <string name="simulacao_umidade">Umidade</string>
+    <string name="simulacao_vento">Vento</string>
+    <string name="_20_de_outubro">20 de outubro</string>
 
 
 </resources>
