@@ -100,22 +100,21 @@ public class ForecastAdapter extends CursorAdapter {
         This is where we fill-in the views with the contents of the cursor.
      */
     public static class ViewHolder {
-        public final TextView cityNames;
+
         public final ImageView iconView;
         public final TextView dateView;
         public final TextView descriptionView;
         public final TextView highTempView;
         public final TextView lowTempView;
-        //public final TextView cityNames;
+
 
         public ViewHolder(View view) {
-            cityNames = (TextView) view.findViewById(R.id.list_item_cityname_textview);
             iconView = (ImageView) view.findViewById(R.id.list_item_icon);
             dateView = (TextView) view.findViewById(R.id.list_item_date_textview);
             descriptionView = (TextView) view.findViewById(R.id.list_item_forecast_textview);
             highTempView = (TextView) view.findViewById(R.id.list_item_high_textview);
             lowTempView = (TextView) view.findViewById(R.id.list_item_low_textview);
-            //cityNames = (TextView) view.findViewById(R.id.name_of_city);
+
         }
     }
 }

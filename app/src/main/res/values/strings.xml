@@ -31,7 +31,7 @@
     <string name="pref_units_imperial" translatable="false">imperial</string>
     <string name="menu_item_share">menu item share</string>
 
-    <string name="content_authority">em.android.sunshine</string>
+    <string name="content_authority" translatable="false">em.android.sunshine</string>
     <string name="sync_account_type">sunshine.android.em</string>
 
     <!--Days of week-->
@@ -47,29 +47,36 @@
     <string name="today">Hoje</string>
     <string name="clear">Claro</string>
 
-    <!-- Date label when displaying tomorrow's weather forecast [CHAR LIMIT=20] -->
+    <!-- texto para amanha [CHAR LIMIT=20] -->
     <string name="tomorrow" translatable="true">Amanhã</string>
 
-    <!-- Date format for displaying day of week and date (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
+    <!-- formatacao da data para o nome do dia da semana (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
     <string name="format_wind_mph">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
-    <!-- Wind in kph [CHAR LIMIT=25] -->
+    <!-- Vento in kph [CHAR LIMIT=25] -->
     <string name="format_wind_kmh">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
 
-    <!-- Pressure format CHAR LIMIT=25] -->
+    <!-- Pressão format CHAR LIMIT=25] -->
     <string name="format_pressure">Pressão: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
 
-    <!-- Humidity format CHAR LIMIT=25]-->
+    <!-- Humidade format CHAR LIMIT=25]-->
    <string name="format_humidity">Humidade: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
 
 
     <string name="format_notification">
-    Temperatura: <xliff:g id="condition">%1$s</xliff:g> Max: <xliff:g id="high">%2$s</xliff:g> Min: <xliff:g id="low">%3$s</xliff:g>
+    Temperatu: <xliff:g id="condition">%1$s</xliff:g> Max: <xliff:g id="high">%2$s</xliff:g> Min: <xliff:g id="low">%3$s</xliff:g>
     </string>
-    <!-- Strings related to Notification preference -->
-    <string name="pref_last_notification">last_notification
-</string>
+    <!-- preferencias de notificaçao-->
+    <string name="pref_last_notification">ultima_notificacao</string>
+
+    <string name="pref_enable_notifications_key" translatable="false">enable_notifications</string>
+    <string name="pref_enable_notifications_label">Notificações de previsão do tempo</string>
+    <string name="pref_enable_notifications_true">Ativado</string>
+    <string name="pref_enable_notifications_false">Não ativado</string>
+    <string name="pref_enable_notifications_default" translatable="false">verdadeiro</string>
+
 
 </resources>
+

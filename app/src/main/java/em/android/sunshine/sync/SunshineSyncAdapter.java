@@ -125,24 +125,22 @@
                             desc,
                             Utility.formatTemperature(context, high),
                             Utility.formatTemperature(context, low));
-//contrução do notification
+                    //contrução do notification
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(getContext())
-// trocar o icone                                   .setSmallIcon(R.drawable.notification_icon)
-                                    .setSmallIcon(R.drawable.ic_menu_manage)
-                                    .setContentTitle("My notification")
-                                    .setContentText("Hello World!");
-                    // Creates an explicit intent for an Activity in your app
-                    Intent resultIntent = new Intent(getContext(), MainActivity.class);
+                // trocar o icone          .setSmallIcon(R.drawable.notification_icon)
+                                    .setSmallIcon(iconId) //informa o icone
+                                    .setContentTitle(title) //informa o titulo da notificação
+                                    .setContentText(contentText); //informa o conteudo
+                    // Cria uma intent explicita para uma activivity no app
+                    Intent resultIntent = new Intent(context, MainActivity.class);
 
-                    // The stack builder object will contain an artificial back stack for the
-                    // started Activity.
-                    // This ensures that navigating backward from the Activity leads out of
-                    // your application to the Home screen.
-                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
-                    // Adds the back stack for the Intent (but not the Intent itself)
-                    stackBuilder.addParentStack(MainActivity.class);
-                    // Adds the Intent that starts the Activity to the top of the stack
+                    // O objetivo do Stack Builder será conter um back stack artifical para inciar a activity
+                    // ele garante que a nevegação da activity
+                    // da a aplicação sera feita
+                    // para a tela inicial.
+                    TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+                    // adiciona uma intent para iniciar a acitvity do topo da pilha
                     stackBuilder.addNextIntent(resultIntent);
                     PendingIntent resultPendingIntent =
                             stackBuilder.getPendingIntent(
@@ -150,10 +148,11 @@
                                     PendingIntent.FLAG_UPDATE_CURRENT
                             );
                     mBuilder.setContentIntent(resultPendingIntent);
+
                     NotificationManager mNotificationManager =
-                            (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                            (NotificationManager) getContext().getSystemService(Context.NOTIFICATION_SERVICE);
     // mId allows you to update the notification later on.
-                    mNotificationManager.notify(mId, mBuilder.build());
+                    mNotificationManager.notify(WEATHER_NOTIFICATION_ID, mBuilder.build());
 
 
                     //refreshing last sync
@@ -495,7 +494,7 @@
              */
                 if (!accountManager.addAccountExplicitly(newAccount, "", null)) {
                     return null;
-                }
+                }onAccountCreated(newAccount, context);
             }
             return newAccount;
         }
