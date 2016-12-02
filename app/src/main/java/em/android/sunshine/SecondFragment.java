@@ -144,6 +144,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
 
     private void updateWeather() {
 
+        //estou forçando o updateweather a utilizar o syncAdapter
         SunshineSyncAdapter.syncImmediately(getActivity());
 
 

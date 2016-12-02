@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import em.android.sunshine.sync.SunshineSyncAdapter;
+
 public class  MainActivity extends AppCompatActivity {
     String mLocation;
     private final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -24,6 +26,8 @@ public class  MainActivity extends AppCompatActivity {
                     .add(R.id.container, new SecondFragment())
                     .commit();
         }
+
+        SunshineSyncAdapter.initializeSyncAdapter(this);
     }
 
     @Override

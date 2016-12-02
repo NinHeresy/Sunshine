@@ -1,4 +1,4 @@
-package em.android.sunshine.service;
+package em.android.sunshine.obsoletas.service;
 
 import android.app.IntentService;
 import android.content.BroadcastReceiver;

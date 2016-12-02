@@ -32,16 +32,18 @@ public class Utility {
                 .equals(context.getString(R.string.pref_units_metric));
     }
 
-    public static String formatTemperature(Context context, double temperature, boolean isMetric) {
-        double temp;
-        if (!isMetric) {
-            temp = 9 * temperature / 5 + 32;
-        } else {
-            temp = temperature;
-        }
-        return context.getString(R.string.format_temperature, temp);
-    }
 
+    //eu tenho metodos de formataçao de temperatura com parametros diferentes.
+    public static String formatTemperature(Context context, double temperature) {
+
+        String suffix = "\u00B0";
+        if (!isMetric(context)) {
+            temperature = (temperature * 1.8) + 32;
+        }
+
+        // For presentation, assume the user doesn't care about tenths of a degree.
+        return String.format(context.getString(R.string.format_temperature), temperature);
+    }
 
     public static String formatDate(long dateInMillis) {
         Date date = new Date(dateInMillis);

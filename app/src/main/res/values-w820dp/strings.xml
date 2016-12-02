@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="refresh">Atualizar</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Configurações</string>
     <string name="localizacao">Localização</string>
     <string name="id_cidade_bh">3470127</string>
     <string name="menu_item_share">menu item share</string>

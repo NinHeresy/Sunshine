@@ -184,10 +184,10 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             double high = data.getDouble(COL_WEATHER_MAX_TEMP);
             double low = data.getDouble(COL_WEATHER_MIN_TEMP);
 
-            String highTemperature = Utility.formatTemperature(getActivity(), high, isMetric);
+            String highTemperature = Utility.formatTemperature(getActivity(), high);
             mHighTempView.setText(highTemperature);
 
-            String lowTemperature = Utility.formatTemperature(getActivity(),low, isMetric);
+            String lowTemperature = Utility.formatTemperature(getActivity(),low);
             mLowTempView.setText(lowTemperature);
 
             float umidade = data.getFloat(COL_HUMIDITY);

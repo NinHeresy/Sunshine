@@ -48,7 +48,7 @@
     <string name="clear">Claro</string>
 
     <!-- Date label when displaying tomorrow's weather forecast [CHAR LIMIT=20] -->
-    <string name="tomorrow">Amanhã</string>
+    <string name="tomorrow" translatable="true">Amanhã</string>
 
     <!-- Date format for displaying day of week and date (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
@@ -63,5 +63,13 @@
 
     <!-- Humidity format CHAR LIMIT=25]-->
    <string name="format_humidity">Humidade: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
+
+
+    <string name="format_notification">
+    Temperatura: <xliff:g id="condition">%1$s</xliff:g> Max: <xliff:g id="high">%2$s</xliff:g> Min: <xliff:g id="low">%3$s</xliff:g>
+    </string>
+    <!-- Strings related to Notification preference -->
+    <string name="pref_last_notification">last_notification
+</string>
 
 </resources>
