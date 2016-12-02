@@ -66,7 +66,7 @@
 
 
     <string name="format_notification">
-    Temperatu: <xliff:g id="condition">%1$s</xliff:g> Max: <xliff:g id="high">%2$s</xliff:g> Min: <xliff:g id="low">%3$s</xliff:g>
+    Tempo: <xliff:g id="condition">%1$s</xliff:g> Max: <xliff:g id="high">%2$s</xliff:g> Min: <xliff:g id="low">%3$s</xliff:g>
     </string>
     <!-- preferencias de notificaçao-->
     <string name="pref_last_notification">ultima_notificacao</string>
@@ -75,7 +75,7 @@
     <string name="pref_enable_notifications_label">Notificações de previsão do tempo</string>
     <string name="pref_enable_notifications_true">Ativado</string>
     <string name="pref_enable_notifications_false">Não ativado</string>
-    <string name="pref_enable_notifications_default" translatable="false">verdadeiro</string>
+    <string name="pref_enable_notifications_default" translatable="false">true</string>
 
 
 </resources>

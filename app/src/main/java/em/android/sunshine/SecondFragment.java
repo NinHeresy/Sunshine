@@ -109,8 +109,19 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
                              Bundle savedInstanceState) {
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-
         View rootView = inflater.inflate(R.layout.fragment_first, container, false);
+
+        //exibir o nome da cidade
+        String locationQuery = Utility.getPreferredLocation(getContext());
+        Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(locationQuery, System.currentTimeMillis());
+        Cursor cursor = getContext().getContentResolver().query(weatherUri, FORECAST_COLUMNS, null, null, null);
+
+        if (cursor.moveToFirst()) {
+            String cityName = cursor.getString(COL_CITY_NAME);
+            TextView textView = (TextView) rootView.findViewById(R.id.list_item_cityname_textview);
+            textView.setText(cityName);
+        }
+
 
         ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
         listView.setAdapter(mForecastAdapter);

@@ -52,7 +52,7 @@
     public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
         private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
-        private static final int WEATHER_NOTIFICATION_ID = 3004;
+        private static final int WEATHER_NOTIFICATION_ID = 60;
 
         public final String LOG_TAG = SunshineSyncAdapter.class.getSimpleName();
         public static final int SYNC_INTERVAL = 20;
@@ -63,14 +63,15 @@
                 WeatherContract.WeatherEntry.COLUMN_WEATHER_ID,
                 WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
                 WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
-                WeatherContract.WeatherEntry.COLUMN_SHORT_DESC
+                WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
+                WeatherContract.LocationEntry.COLUMN_CITY_NAME
         };
 
         private static final int INDEX_WEATHER_ID = 0;
         private static final int INDEX_MAX_TEMP = 1;
         private static final int INDEX_MIN_TEMP = 2;
         private static final int INDEX_SHORT_DESC = 3;
-
+        private static final int INDEX_CITY_NAME = 4;
         public SunshineSyncAdapter(Context context, boolean autoInitialize) {
             super(context, autoInitialize);
         }
@@ -99,6 +100,13 @@
             Context context = getContext();
             //verifica o utlimo update e exibe a notificação do dia atual
             SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+
+            String displayNotificationsKey = context.getString(R.string.pref_enable_notifications_key);
+            boolean displayNotifications = prefs.getBoolean(displayNotificationsKey,
+                    Boolean.parseBoolean(context.getString(R.string.pref_enable_notifications_default)));
+
+
+            if(displayNotifications){
             String lastNotificationKey = context.getString(R.string.pref_last_notification);
             long lastSync = prefs.getLong(lastNotificationKey, 0);
 
@@ -113,12 +121,13 @@
 
                 if (cursor.moveToFirst()) {
                     int weatherId = cursor.getInt(INDEX_WEATHER_ID);
+                    String cityName = cursor.getString(INDEX_CITY_NAME);
                     double high = cursor.getDouble(INDEX_MAX_TEMP);
                     double low = cursor.getDouble(INDEX_MIN_TEMP);
                     String desc = cursor.getString(INDEX_SHORT_DESC);
 
                     int iconId = Utility.getIconResourceForWeatherCondition(weatherId);
-                    String title = context.getString(R.string.app_name);
+                    String title = context.getString(R.string.app_name) + " " + cityName;
 
                     // define o teto da notificação
                     String contentText = String.format(context.getString(R.string.format_notification),
@@ -155,14 +164,14 @@
                     mNotificationManager.notify(WEATHER_NOTIFICATION_ID, mBuilder.build());
 
 
-                    //refreshing last sync
+                    //atualiza a ultima notificação
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putLong(lastNotificationKey, System.currentTimeMillis());
                     editor.commit();
                 }
             }
 
-
+            }
         }
 
 
