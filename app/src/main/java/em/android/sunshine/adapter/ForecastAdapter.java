@@ -31,6 +31,7 @@ public class ForecastAdapter extends CursorAdapter {
     private static final int VIEW_TYPE_COUNT = 2;
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
+    private boolean mUseTodayLayout = true;
 
 
     @Override
@@ -117,4 +118,9 @@ public class ForecastAdapter extends CursorAdapter {
 
         }
     }
+
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+    }
+
 }

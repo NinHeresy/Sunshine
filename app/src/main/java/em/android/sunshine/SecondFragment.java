@@ -37,15 +37,18 @@ import  em.android.sunshine.sync.SunshineSyncAdapter;
 public class SecondFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     public static final String LOG_TAG = SecondFragment.class.getSimpleName();
     private static final int FORECAST_LOADER = 0;
-    // For the forecast view we're showing only a small subset of the stored data.
-    // Specify the columns we need.
+    ListView listView;
+    View rootView;
+    private ForecastAdapter mForecastAdapter;
+
+
+    private int mPosition = ListView.INVALID_POSITION;
+    private boolean mUseTodayLayout;
+
+    private static final String SELECTED_KEY = "selected_position";
+
     private static final String[] FORECAST_COLUMNS = {
-            // In this case the id needs to be fully qualified with a table name, since
-            // the content provider joins the location & weather tables in the background
-            // (both have an _id column)
-            // On the one hand, that's annoying.  On the other, you can search the weather table
-            // using the location set by the user, which is only in the Location table.
-            // So the convenience is worth it.
+
             WeatherContract.WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
             WeatherContract.WeatherEntry.COLUMN_DATE,
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
@@ -61,8 +64,6 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
 
     };
 
-    // These indices are tied to FORECAST_COLUMNS.  If FORECAST_COLUMNS changes, these
-    // must change.
     public static final int COL_WEATHER_ID = 0;
     public static final int COL_WEATHER_DATE = 1;
     public static final int COL_WEATHER_DESC = 2;
@@ -75,7 +76,6 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     public static final int COL_CITY_NAME = 9;
 
 
-    private ForecastAdapter mForecastAdapter;
 
     public SecondFragment() {
     }
@@ -136,7 +136,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
                              Bundle savedInstanceState) {
 
         mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-        View rootView = inflater.inflate(R.layout.fragment_first, container, false);
+        rootView = inflater.inflate(R.layout.fragment_first, container, false);
 
         //exibir o nome da cidade *tem que ser feito aqui porque ela só será carregada uma vez!!!
         String locationQuery = Utility.getPreferredLocation(getContext());
@@ -150,7 +150,10 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
 
-        ListView listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
+        listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
+
+        View emptyView = rootView.findViewById(R.id.listview_forecast_empty);
+        listView.setEmptyView(emptyView);
         listView.setAdapter(mForecastAdapter); //preencherá a lista com informaçoes do adaptador
 
         // We'll call our MainActivity
@@ -180,21 +183,20 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         super.onActivityCreated(savedInstanceState);
     }
 
-    private void updateWeather() {
-
-        //estou forçando o updateweather a utilizar o syncAdapter
-        SunshineSyncAdapter.syncImmediately(getActivity());
-
-
-
+    void onLocationChanged( ) {
+        getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        updateWeather();
+    public void onSaveInstanceState(Bundle outState) {
+        // When tablets rotate, the currently selected list item needs to be saved.
+        // When no item is selected, mPosition will be set to Listview.INVALID_POSITION,
+        // so check for that before storing.
+        if (mPosition != ListView.INVALID_POSITION) {
+            outState.putInt(SELECTED_KEY, mPosition);
+        }
+        super.onSaveInstanceState(outState);
     }
-
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         String locationSetting = Utility.getPreferredLocation(getActivity());
@@ -215,10 +217,38 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mForecastAdapter.swapCursor(cursor);
+        if (mPosition != ListView.INVALID_POSITION) {
+            // If we don't need to restart the loader, and there's a desired position to restore
+            // to, do so now.
+            listView.smoothScrollToPosition(mPosition);
+        }
+        updateEmptyView();
+    }
+
+    public void setUseTodayLayout(boolean useTodayLayout) {
+        mUseTodayLayout = useTodayLayout;
+        if (mForecastAdapter != null) {
+            mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
+        }
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mForecastAdapter.swapCursor(null);
     }
+
+    private void updateEmptyView() {
+        if ( mForecastAdapter.getCount() == 0 ) {
+            TextView tv = (TextView) getView().findViewById(R.id.listview_forecast_empty);
+            if ( null != tv ) {
+                // if cursor is empty, why? do we have an invalid location
+                int message = R.string.sem_dados;
+                if (!Utility.isNetworkAvailable(getActivity()) ) {
+                    message = R.string.empty_forecast_list_no_network;
+                }
+                tv.setText(message);
+            }
+        }
+    }
+
 }

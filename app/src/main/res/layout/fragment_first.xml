@@ -2,26 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="em.android.sunshine.SecondFragment"
-    android:orientation="vertical"
     android:layout_margin="5dp"
-    >
+    android:orientation="vertical"
+    tools:context="em.android.sunshine.SecondFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:id="@+id/list_item_cityname_textview"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textStyle="bold"
+        android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        />
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/list_view_forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp" />
+        android:layout_margin="5dp" />
+
+    <TextView
+        android:id="@+id/listview_forecast_empty"
+        android:layout_width="match_parent"
+        android:text="@string/sem_dados"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

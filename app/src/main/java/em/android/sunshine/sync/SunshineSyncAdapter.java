@@ -53,7 +53,7 @@
     public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
         private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
-        private static final int WEATHER_NOTIFICATION_ID = 60;
+        private static final int WEATHER_NOTIFICATION_ID = 600;
 
         public final String LOG_TAG = SunshineSyncAdapter.class.getSimpleName();
         public static final int SYNC_INTERVAL = 20;
@@ -139,7 +139,7 @@
                     NotificationCompat.Builder mBuilder =
                             new NotificationCompat.Builder(getContext())
                 // trocar o icone          .setSmallIcon(R.drawable.notification_icon)
-                                    .setSmallIcon(iconId) //informa o icone
+                                    .setSmallIcon(iconId) //informa o icone correspondente à condição do tempo
                                     .setContentTitle(title) //informa o titulo da notificação
                                     .setContentText(contentText); //informa o conteudo
                     // Cria uma intent explicita para uma activivity no app

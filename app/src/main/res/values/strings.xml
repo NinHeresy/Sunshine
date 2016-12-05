@@ -83,6 +83,8 @@
     <string name="simulacao_umidade">Umidade</string>
     <string name="simulacao_vento">Vento</string>
     <string name="_20_de_outubro">20 de outubro</string>
+    <string name="sem_dados">Não há dados a serem exibidos, verifique a conexão com a rede</string>
+    <string name="empty_forecast_list_no_network">Verifique a conexão com a rede</string>
 
 
 </resources>
