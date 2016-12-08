@@ -19,6 +19,8 @@ import android.support.v7.widget.ShareActionProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import org.w3c.dom.Text;
 
 import java.net.URI;
@@ -166,7 +168,12 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
 
 
             int weatherId = data.getInt(COL_WEATHER_CONDITION_ID);
-            mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+//            mIconView.setImageResource(Utility.getArtResourceForWeatherCondition(weatherId));
+
+            Glide.with(this)
+                    .load(Utility.getArtUrlForWeatherCondition(getActivity(), weatherId))
+                    .error(Utility.getArtResourceForWeatherCondition(weatherId))
+                    .into(mIconView);
 
             long date = data.getLong(COL_WEATHER_DATE);
             String friendlyDateText = Utility.getDayName(getActivity(),date);
@@ -177,7 +184,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             String description = data.getString(COL_WEATHER_DESC);
             mDescriptionView.setText(description);
 
-            mIconView.setContentDescription(description);
+            mIconView.setContentDescription(getString(R.string.a11y_forecast_icon, description));
 
             boolean isMetric = Utility.isMetric(getActivity());
 

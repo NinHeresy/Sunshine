@@ -2,9 +2,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
     android:orientation="vertical"
-    tools:context="em.android.sunshine.SecondFragment">
+    tools:context="em.android.sunshine.SecondFragment"
+   >
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -14,20 +14,22 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/today_touch_selector"
+        android:padding="10dp"
+        android:contentDescription="@string/nome_da_cidade"/>
 
     <ListView
         android:id="@+id/list_view_forecast"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp" />
+        android:divider="@null" />
 
     <TextView
         android:id="@+id/listview_forecast_empty"
         android:layout_width="match_parent"
         android:text="@string/sem_dados"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@android:color/white"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textStyle="bold"
         android:layout_height="wrap_content" />
 
