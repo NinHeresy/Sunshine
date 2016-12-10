@@ -26,16 +26,6 @@
             android:textAlignment="center"
             tools:ignore="UnusedAttribute" />
 
-        <TextView
-            android:fontFamily="sans-serif-condensed"
-            android:id="@+id/detail_date_textview"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:textSize="16sp"
-            android:text="@string/_20_de_outubro"
-            android:textAlignment="viewStart"
-            tools:ignore="UnusedAttribute"
-            android:padding="10dp" />
 
         </LinearLayout>
         <!-- Main content: high, low, art, weather state -->

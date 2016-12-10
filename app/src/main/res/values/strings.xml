@@ -15,8 +15,7 @@
 
     <string name="navigation_drawer_open">Abrir mapa</string>
     <string name="navigation_drawer_close">Fechar mapa</string>
-    <string name="title_activity_main2">Main2Activity</string>
-    <string name="title_activity_detail_actvity">DetailActvity</string>
+    <string name="title_activity_detail_actvity">Detalhes do tempo</string>
     <string name="pref_location_label">Localização</string>
 
     <string name="pref_location_key" translatable="false">localizacao</string>
@@ -54,16 +53,15 @@
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>
     <string name="format_temperature"><xliff:g id="temp">%1.0f</xliff:g>\u00B0</string>
 
-    <string name="format_wind_mph">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_wind_mph"><xliff:g id="speed">%1$1.0f</xliff:g> mph <xliff:g id="direction">%2$s</xliff:g></string>
     <!-- Vento in kph [CHAR LIMIT=25] -->
-    <string name="format_wind_kmh">Vento: <xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
+    <string name="format_wind_kmh"><xliff:g id="speed">%1$1.0f</xliff:g> km/h <xliff:g id="direction">%2$s</xliff:g></string>
 
     <!-- Pressão format CHAR LIMIT=25] -->
-    <string name="format_pressure">Pressão: <xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
+    <string name="format_pressure"><xliff:g id="pressure">%1.0f</xliff:g> hPa</string>
 
     <!-- Humidade format CHAR LIMIT=25]-->
-    <string name="format_humidity">Humidade: <xliff:g id="humidity">%1.0f</xliff:g> %%</string>
-
+    <string name="format_humidity"><xliff:g id="humidity">%1.0f</xliff:g>%%</string>
 
     <string name="format_notification">
     Tempo: <xliff:g id="condition">%1$s</xliff:g> Max: <xliff:g id="high">%2$s</xliff:g> Min: <xliff:g id="low">%3$s</xliff:g>
@@ -158,7 +156,7 @@
 
 
     <!-- Format for retrieving art from an external source [CHAR LIMIT=NONE] -->
-    <string name="pref_art_pack_key">Icon Pack</string>
+    <string name="pref_art_pack_label">Icon Pack</string>
 
     <!-- Label for Sunshine option in art pack preference [CHAR LIMIT=25] -->
     <string name="pref_art_pack_label_sunshine">Sunshine</string>

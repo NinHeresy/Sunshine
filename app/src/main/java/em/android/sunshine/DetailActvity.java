@@ -1,17 +1,11 @@
 package em.android.sunshine;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ShareActionProvider;
-import android.widget.TextView;
 
 public class DetailActvity extends AppCompatActivity {
 //tela de detalhes do tempo
@@ -21,7 +15,19 @@ public class DetailActvity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_actvity);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         if (savedInstanceState == null) {
+
+
+            Bundle arguments = new Bundle();
+            arguments.putParcelable(DetailActvityFragment.DETAIL_URI, getIntent().getData());
+
+            DetailActvityFragment fragment = new DetailActvityFragment();
+            fragment.setArguments(arguments);
+
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container_fragment, new DetailActvityFragment())
                     .commit();

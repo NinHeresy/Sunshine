@@ -96,9 +96,8 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             mUri = arguments.getParcelable(DetailActvityFragment.DETAIL_URI);
         }
 
-        View rootView = inflater.inflate(R.layout.fragment_detail_2, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_detail_3, container, false);
         mIconView = (ImageView) rootView.findViewById(R.id.detail_icon);
-        mDateView = (TextView) rootView.findViewById(R.id.detail_date_textview);
         mFriendlyDateView = (TextView) rootView.findViewById(R.id.detail_day_textview);
         mDescriptionView = (TextView) rootView.findViewById(R.id.detail_forecast_textview);
         mHighTempView = (TextView) rootView.findViewById(R.id.detail_high_textview);
@@ -179,7 +178,6 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             String friendlyDateText = Utility.getDayName(getActivity(),date);
             String dateText = Utility.getFormattedMonthDay(getActivity(),date);
             mFriendlyDateView.setText(friendlyDateText);
-            mDateView.setText(dateText);
 
             String description = data.getString(COL_WEATHER_DESC);
             mDescriptionView.setText(description);
@@ -193,12 +191,14 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
 
             String highTemperature = Utility.formatTemperature(getActivity(), high);
             mHighTempView.setText(highTemperature);
+            mHighTempView.setContentDescription(getString(R.string.a11y_high_temp, highTemperature));
 
             String lowTemperature = Utility.formatTemperature(getActivity(),low);
             mLowTempView.setText(lowTemperature);
 
             float umidade = data.getFloat(COL_HUMIDITY);
-            mHumidityView.setText(getActivity().getString(R.string.format_humidity));
+            mHumidityView.setText(getActivity().getString(R.string.format_humidity, umidade));
+            mHumidityView.setContentDescription(mHumidityView.getText());
 
             float windSpeedStr = data.getFloat(COL_WIND_SPEED);
             float windDirStr = data.getFloat(COL_WEATHER_DEGRESS);
