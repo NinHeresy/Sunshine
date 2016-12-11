@@ -14,10 +14,14 @@ import android.view.MenuItem;
 import com.google.firebase.crash.FirebaseCrash;
 
 import em.android.sunshine.sync.SunshineSyncAdapter;
+import em.android.sunshine.utility.Utility;
 
 public class  MainActivity extends AppCompatActivity {
-    String mLocation;
     private final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String DETAILFRAGMENT_TAG = "DFTAG";
+
+    private boolean mTwoPane;
+    private String mLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,11 +31,21 @@ public class  MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        mLocation = null;
-        if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container, new SecondFragment())
-                    .commit();
+        mLocation = Utility.getPreferredLocation(this);
+        if (findViewById(R.id.container_fragment) != null) {
+
+
+            mTwoPane = true;
+
+            if (savedInstanceState == null) {
+
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new SecondFragment(), DETAILFRAGMENT_TAG)
+                        .commit();
+            }
+
+        }else {
+            mTwoPane = false;
         }
         FirebaseCrash.log("Activity created");
         SunshineSyncAdapter.initializeSyncAdapter(this);
@@ -61,7 +75,21 @@ public class  MainActivity extends AppCompatActivity {
 //        }
         return super.onOptionsItemSelected(item);
     }
-    //private final String LOG_TAG = SecondFragment.FetchWeatherTask.class.getSimpleName();
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String location = Utility.getPreferredLocation( this );
+        // update the location in our second pane using the fragment manager
+        if (location != null && !location.equals(mLocation)) {
+            SecondFragment ff = (SecondFragment)getSupportFragmentManager().findFragmentById(R.id.container);
+            if ( null != ff ) {
+                ff.onLocationChanged();
+            }
+            mLocation = location;
+        }
+    }
+
 
 //    private void abreLocalizacaoNoMapa(){
 //        SharedPreferences sharedPrefs =

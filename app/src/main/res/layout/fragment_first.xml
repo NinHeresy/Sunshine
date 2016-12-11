@@ -1,10 +1,9 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="em.android.sunshine.SecondFragment"
-   >
+    tools:context="em.android.sunshine.SecondFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -12,12 +11,12 @@
         android:id="@+id/list_item_cityname_textview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:contentDescription="@string/nome_da_cidade"
+        android:padding="10dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
-        android:textStyle="bold"
-        android:background="@color/colorPrimary"
-        android:padding="10dp"
-        android:contentDescription="@string/nome_da_cidade"/>
+        android:textStyle="bold" />
 
     <ListView
         android:id="@+id/list_view_forecast"
@@ -28,9 +27,9 @@
     <TextView
         android:id="@+id/listview_forecast_empty"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:text="@string/sem_dados"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textStyle="bold"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 
-</LinearLayout>
+</FrameLayout>
