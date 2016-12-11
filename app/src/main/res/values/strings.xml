@@ -48,6 +48,7 @@
 
     <!-- texto para amanha [CHAR LIMIT=20] -->
     <string name="tomorrow" translatable="true">Amanhã</string>
+    <string name="icone_condicao_tempo">icone condicao do tempo</string>
 
     <!-- formatacao da data para o nome do dia da semana (i.e. Mon Jun 1) [CHAR LIMIT=20] -->
     <string name="format_full_friendly_date"><xliff:g id="day">%1$s</xliff:g>, <xliff:g id="date">%2$s</xliff:g></string>

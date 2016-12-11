@@ -83,6 +83,13 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     public SecondFragment() {
     }
 
+
+    public interface Callback {
+        /**
+         * DetailFragmentCallback for when an item has been selected.
+         */
+        public void onItemSelected(Uri dateUri);
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

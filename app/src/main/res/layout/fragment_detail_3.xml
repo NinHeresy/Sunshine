@@ -1,171 +1,105 @@
 <!-- Master layout. -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:gravity="center_vertical"
-        android:layout_height="wrap_content"
+
+
+    <include layout="@layout/detail_today_grid"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:layout_height="0dp"
+        android:layout_weight="3"/>
 
         <!-- Header: Day, Date -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
-            <TextView
-                android:fontFamily="sans-serif-condensed"
-                android:id="@+id/detail_day_textview"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:textSize="24sp"
-                android:text="@string/today"
-                android:textAlignment="center"
-                tools:ignore="UnusedAttribute" />
 
-
-        </LinearLayout>
         <!-- Main content: high, low, art, weather state -->
-        <LinearLayout
-            android:gravity="center_horizontal"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:layout_width="match_parent"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/detail_high_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/simulacao_maxima"
-                    android:textSize="40sp"
-                    android:layout_gravity="center"
-                    android:textAlignment="center" />
-
-                <TextView
-                    android:id="@+id/detail_low_textview"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="@string/simulacao_minima"
-                    android:textSize="30sp"
-                    android:textAlignment="center" />
-
-
-            </LinearLayout>
-
-
-
-            <LinearLayout
-                android:gravity="center_horizontal"
-                android:layout_gravity="center"
-                android:layout_height="wrap_content"
-                android:layout_width="0dp"
-                android:orientation="vertical"
-                android:layout_weight="1"
-                tools:ignore="UseCompoundDrawables">
-
-                <ImageView
-                    android:id="@+id/detail_icon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher"
-                    android:cropToPadding="false"
-                    android:adjustViewBounds="true"
-                    android:contentDescription="@string/texto_condicao_tempo" />
-
-                <TextView
-                    android:id="@+id/detail_forecast_textview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:textAppearanceLarge"
-                    android:text="@string/clear"/>
-            </LinearLayout>
-        </LinearLayout>
 
         <GridLayout
             android:id="@+id/detail_additional_pane"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="2"
+            android:background="@color/grey"
             android:columnCount="2"
             android:paddingBottom="@dimen/abc_list_item_padding_horizontal_material"
-            android:paddingTop="@dimen/abc_list_item_padding_horizontal_material"
+            android:paddingEnd="@dimen/forecast_detail_horizontal_padding"
             android:paddingLeft="@dimen/forecast_detail_horizontal_padding"
-            android:paddingStart="@dimen/forecast_detail_horizontal_padding"
             android:paddingRight="@dimen/forecast_detail_horizontal_padding"
-            android:paddingEnd="@dimen/forecast_detail_horizontal_padding">
+            android:paddingStart="@dimen/forecast_detail_horizontal_padding"
+            android:paddingTop="@dimen/abc_list_item_padding_horizontal_material"
+            tools:ignore="PrivateResource">
 
 
             <TextView
-                android:text="@string/simulacao_umidade"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_rowWeight="1"
-                tools:targetApi="lollipop"
-                android:layout_width="wrap_content" />
+                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
+                android:text="@string/simulacao_umidade"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/windowBackground"
+                tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/list_item_humidity"
-                android:text="@string/simulacao_minima"
-                android:gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:layout_gravity="fill"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                android:layout_columnWeight="1"
+                android:layout_gravity="fill"
+                android:gravity="center_vertical"
+                android:text="@string/simulacao_minima"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textColor="@color/windowBackground"
+                tools:targetApi="lollipop"
+                android:textAlignment="center" />
 
             <TextView
-                android:text="@string/simulacao_vento"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_rowWeight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
+                android:text="@string/simulacao_vento"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/windowBackground"
                 tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/list_item_wind"
-                android:text="@string/simulacao_minima"
+                android:layout_gravity="fill"
                 android:gravity="center_vertical"
+                android:text="@string/simulacao_minima"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:layout_gravity="fill"/>
+                android:textColor="@color/windowBackground"
+                android:textAlignment="center" />
 
             <TextView
-                android:text="@string/simulacao_pressao"
                 android:layout_height="wrap_content"
-                android:fontFamily="sans-serif"
-                android:gravity="center_vertical"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:layout_columnWeight="1"
                 android:layout_gravity="fill"
                 android:layout_rowWeight="1"
+                android:fontFamily="sans-serif"
+                android:gravity="center_vertical"
+                android:text="@string/simulacao_pressao"
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                android:textColor="@color/windowBackground"
                 tools:targetApi="lollipop" />
 
             <TextView
                 android:id="@+id/list_item_pressure"
-                android:text="@string/simulacao_minima"
+                android:layout_gravity="fill"
                 android:gravity="center_vertical"
+                android:text="@string/simulacao_minima"
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-                android:layout_gravity="fill"/>
+                android:textColor="@color/windowBackground"
+                android:textAlignment="center" />
 
         </GridLayout>
 
-
-    </LinearLayout>
-</ScrollView>
+</LinearLayout>

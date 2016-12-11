@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "24.0.1"
+    buildToolsVersion '24.0.1'
 
     defaultConfig {
         applicationId "em.android.sunshine"
@@ -22,9 +22,9 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:appcompat-v7:22.1.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.android.support:design:23.4.0'
     compile 'com.google.code.gson:gson:2.6.2'
@@ -33,6 +33,7 @@ dependencies {
     compile 'com.google.firebase:firebase-crash:9.6.1'
     testCompile 'junit:junit:4.12'
     compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.android.support:gridlayout-v7:22.1.0'
 }
 
 

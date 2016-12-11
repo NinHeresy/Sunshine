@@ -3,13 +3,10 @@
     package="em.android.sunshine">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission
-        android:name="android.permission.READ_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.WRITE_SYNC_SETTINGS"/>
-    <uses-permission
-        android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -27,25 +24,24 @@
             android:name=".DetailActvity"
             android:label=""
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="em.android.sunshine.MainActivity" />
         </activity>
-        <activity android:name=".SetingsActivity"
+        <activity
+            android:name=".SetingsActivity"
             android:label="@string/action_settings"
             android:parentActivityName=".MainActivity"
             android:theme="@style/Theme.AppCompat.CompactMenu"></activity>
 
         <provider
-            android:authorities="@string/content_authority"
             android:name=".data.WeatherProvider"
+            android:authorities="@string/content_authority"
             android:exported="false"
             android:syncable="true" />
 
-        <service
-            android:name=".sync.SunshineAuthenticatorService"
-            >
+        <service android:name=".sync.SunshineAuthenticatorService">
             <intent-filter>
                 <action android:name="android.accounts.AccountAuthenticator" />
             </intent-filter>
@@ -56,8 +52,7 @@
 
         <service
             android:name=".sync.SunshineSyncService"
-            android:exported="true"
-            >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.content.SyncAdapter" />
             </intent-filter>
@@ -65,8 +60,6 @@
                 android:name="android.content.SyncAdapter"
                 android:resource="@xml/syncadapter" />
         </service>
-
-
 
 
     </application>
