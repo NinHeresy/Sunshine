@@ -18,6 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimary" />
 
+
         <!-- Header: Day, Date -->
         <include layout="@layout/detail_today_grid"
             android:layout_width="match_parent"

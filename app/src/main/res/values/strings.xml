@@ -86,7 +86,7 @@
     <string name="pref_location_status_key">loc-status</string>
     <string name="empty_forecast_list_server_down">Falha de conexão com o servidor</string>
     <string name="empty_forecast_list_server_error">Erro do servidor</string>
-    <string name="nome_da_cidade">nome da cidade</string>
+    <string name="nome_da_cidade">Belo Horizonte</string>
 
     <!-- A11y -->
     <string name="a11y_forecast">Forecast: <xliff:g id="condition">%1$s</xliff:g></string>
@@ -175,6 +175,8 @@
 
     <string name="pref_location_error_description">Invalid Location (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
     <string name="pref_location_unknown_description">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
+    <string name="icone_condicao_de_tempo">ícone condicao de tempo</string>
 
 </resources>
 

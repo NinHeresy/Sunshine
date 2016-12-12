@@ -1,26 +1,23 @@
 package em.android.sunshine;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.google.firebase.crash.FirebaseCrash;
 
+import em.android.sunshine.adapter.ForecastAdapter;
 import em.android.sunshine.sync.SunshineSyncAdapter;
 import em.android.sunshine.utility.Utility;
 
-public class  MainActivity extends AppCompatActivity {
-    private final String LOG_TAG = MainActivity.class.getSimpleName();
+public class  MainActivity extends AppCompatActivity implements SecondFragment.Callback{
     private static final String DETAILFRAGMENT_TAG = "DFTAG";
 
-    private boolean mTwoPane;
+    boolean mTwoPane;
     private String mLocation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,24 +29,28 @@ public class  MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         mLocation = Utility.getPreferredLocation(this);
+
         if (findViewById(R.id.container_fragment) != null) {
-
-
             mTwoPane = true;
 
             if (savedInstanceState == null) {
 
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, new SecondFragment(), DETAILFRAGMENT_TAG)
+                        .replace(R.id.container_fragment, new DetailActvityFragment(), DETAILFRAGMENT_TAG)
                         .commit();
             }
 
         }else {
             mTwoPane = false;
         }
+
+//        SecondFragment forecastFragment =  ((SecondFragment)getSupportFragmentManager()
+//                .findFragmentById(R.id.container_fragment));
+
         FirebaseCrash.log("Activity created");
         SunshineSyncAdapter.initializeSyncAdapter(this);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menuItem) {
@@ -114,5 +115,27 @@ public class  MainActivity extends AppCompatActivity {
 //            Log.d(LOG_TAG, "Não foi encontrada  " + location);
 //        }
 //    }
+
+    @Override
+    public void onItemSelected(Uri contentUri) {
+        if (mTwoPane) {
+            // In two-pane mode, show the detail view in this activity by
+            // adding or replacing the detail fragment using a
+            // fragment transaction.
+            Bundle args = new Bundle();
+            args.putParcelable(DetailActvityFragment.DETAIL_URI, contentUri);
+
+            DetailActvityFragment fragment = new DetailActvityFragment();
+            fragment.setArguments(args);
+
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container_fragment, fragment, DETAILFRAGMENT_TAG)
+                    .commit();
+        } else {
+            Intent intent = new Intent(this, DetailActvity.class)
+                    .setData(contentUri);
+            startActivity(intent);
+        }
+    }
     }
 

@@ -16,35 +16,24 @@ public class DetailActvity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_actvity);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (savedInstanceState == null) {
-
-
-            Bundle arguments = new Bundle();
-            arguments.putParcelable(DetailActvityFragment.DETAIL_URI, getIntent().getData());
-
             DetailActvityFragment fragment = new DetailActvityFragment();
-            fragment.setArguments(arguments);
-
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.container_fragment, new DetailActvityFragment())
+                    .add(R.id.container_fragment, fragment)
                     .commit();
         }
-
     }
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.detail, menu);
-        return true;
-    }
-
-
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.detail, menu);
+//        return true;
+//    }
+//
+//
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will

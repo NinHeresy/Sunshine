@@ -288,4 +288,9 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
             updateEmptyView();
         }
     }
+
+    public interface Callback {
+
+        public void onItemSelected(Uri dateUri);
+    }
 }
