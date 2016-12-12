@@ -38,7 +38,8 @@
             android:paddingLeft="@dimen/forecast_detail_horizontal_padding"
             android:paddingStart="@dimen/forecast_detail_horizontal_padding"
             android:paddingRight="@dimen/forecast_detail_horizontal_padding"
-            android:paddingEnd="@dimen/forecast_detail_horizontal_padding">
+            android:paddingEnd="@dimen/forecast_detail_horizontal_padding"
+            tools:ignore="PrivateResource">
 
 
             <TextView
@@ -60,7 +61,8 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                 android:layout_gravity="fill"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"/>
+                android:layout_columnWeight="1"
+                tools:ignore="UnusedAttribute" />
 
             <TextView
                 android:text="@string/simulacao_vento"

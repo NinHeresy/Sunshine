@@ -2,13 +2,14 @@ package em.android.sunshine;
 
 import android.content.Intent;
 import android.database.Cursor;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,19 +18,16 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.support.v7.widget.ShareActionProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import org.w3c.dom.Text;
-
-import java.net.URI;
+import android.net.Uri;
 
 import em.android.sunshine.data.WeatherContract;
-import em.android.sunshine.utility.Utility;
 import em.android.sunshine.data.WeatherContract.WeatherEntry;
+import em.android.sunshine.utility.Utility;
 /*
  * A placeholder fragment containing a simple view.
  */
@@ -43,7 +41,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
 
     private ShareActionProvider mShareActionProvider;
     private String mForecast;
-    private URI mUri;
+    private Uri mUri;
 
     private static final int DETAIL_LOADER = 0;
 
@@ -70,7 +68,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
     private static final int COL_WEATHER_MIN_TEMP = 4;
     private static final int COL_HUMIDITY = 5;
     private static final int COL_WIND_SPEED = 6;
-    private static final int COL_PRESSURE =7;
+    private static final int COL_PRESSURE = 7;
     private static final int COL_WEATHER_CONDITION_ID = 8;
     private static final int COL_WEATHER_DEGRESS = 9;
 
@@ -113,7 +111,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
     private void finishCreatingMenu(Menu menu) {
         // Retrieve the share menu item
         MenuItem menuItem = menu.findItem(R.id.action_share);
-        menuItem.setIntent(createShareForecastIntent());
+      //  menuItem.setIntent(createShareForecastIntent());
     }
 
 
@@ -135,8 +133,6 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
     }
 
 
-
-
     private Intent createShareForecastIntent() {
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
@@ -153,22 +149,37 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-        Log.v(LOG_TAG, "In onCreateLoader");
-        Intent intent = getActivity().getIntent();
-        if (intent == null || intent.getData() == null) {
-            return null;
-        }
+//        Log.v(LOG_TAG, "In onCreateLoader");
+//        Intent intent = getActivity().getIntent();
+//        if (intent == null || intent.getData() == null) {
+//            return null;
+//        }
+//
+//        // Now create and return a CursorLoader that will take care of
+//        // creating a Cursor for the data being displayed.
+//        return new CursorLoader(
+//                getActivity(),
+//                intent.getData(),
+//                FORECAST_COLUMNS,
+//                null,
+//                null,
+//                null
+//        );
+//troquei por esse pra inflar o layout na tela
 
-        // Now create and return a CursorLoader that will take care of
-        // creating a Cursor for the data being displayed.
-        return new CursorLoader(
-                getActivity(),
-                intent.getData(),
-                FORECAST_COLUMNS,
-                null,
-                null,
-                null
-        );
+        if ( null != mUri ) {
+            // Now create and return a CursorLoader that will take care of
+            // creating a Cursor for the data being displayed.
+            return new CursorLoader(
+                    getActivity(),
+                    mUri,
+                    FORECAST_COLUMNS,
+                    null,
+                    null,
+                    null
+            );
+        }
+        return null;
     }
 
     @Override
@@ -187,8 +198,8 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
                     .into(mIconView);
 
             long date = data.getLong(COL_WEATHER_DATE);
-            String friendlyDateText = Utility.getDayName(getActivity(),date);
-            String dateText = Utility.getFormattedMonthDay(getActivity(),date);
+            String friendlyDateText = Utility.getDayName(getActivity(), date);
+            String dateText = Utility.getFormattedMonthDay(getActivity(), date);
             mFriendlyDateView.setText(friendlyDateText);
 
             String description = data.getString(COL_WEATHER_DESC);
@@ -205,7 +216,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             mHighTempView.setText(highTemperature);
             mHighTempView.setContentDescription(getString(R.string.a11y_high_temp, highTemperature));
 
-            String lowTemperature = Utility.formatTemperature(getActivity(),low);
+            String lowTemperature = Utility.formatTemperature(getActivity(), low);
             mLowTempView.setText(lowTemperature);
 
             float umidade = data.getFloat(COL_HUMIDITY);
@@ -215,7 +226,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             float windSpeedStr = data.getFloat(COL_WIND_SPEED);
             float windDirStr = data.getFloat(COL_WEATHER_DEGRESS);
 
-            mWindView.setText(Utility.getFormattedWind(getActivity(), windSpeedStr,windDirStr ));
+            mWindView.setText(Utility.getFormattedWind(getActivity(), windSpeedStr, windDirStr));
 
             float pressure = data.getFloat(COL_PRESSURE);
             mPressureView.setText(getActivity().getString(R.string.format_pressure, pressure));
@@ -229,23 +240,23 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             }
         }
 
-        AppCompatActivity activity = (AppCompatActivity)getActivity();
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
         Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
 
         if (activity instanceof DetailActvity) {
             activity.supportStartPostponedEnterTransition();
 
-            if ( null != toolbarView ) {
+            if (null != toolbarView) {
                 activity.setSupportActionBar(toolbarView);
 
                 activity.getSupportActionBar().setDisplayShowTitleEnabled(false);
                 activity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             }
         } else {
-            if ( null != toolbarView ) {
+            if (null != toolbarView) {
                 Menu menu = toolbarView.getMenu();
-                if ( null != menu ) menu.clear();
-                toolbarView.inflateMenu(R.menu.menu_detail_actvity);
+                if (null != menu) menu.clear();
+                toolbarView.inflateMenu(R.menu.menu);
                 finishCreatingMenu(toolbarView.getMenu());
             }
         }
@@ -253,5 +264,6 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
 
 
     @Override
-    public void onLoaderReset(Loader<Cursor> loader) { }
+    public void onLoaderReset(Loader<Cursor> loader) {
+    }
 }
