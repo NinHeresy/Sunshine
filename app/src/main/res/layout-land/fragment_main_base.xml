@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="@dimen/appbar_elevation"
+    tools:context="em.android.sunshine.SecondFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/list_item_cityname_textview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary"
+            android:contentDescription="@string/nome_da_cidade"
+            android:padding="20dp"
+            android:text="@string/nome_da_cidade"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <ListView
+            android:id="@+id/list_view_forecast"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null" />
+
+        <TextView
+            android:id="@+id/listview_forecast_empty"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sem_dados"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</FrameLayout>

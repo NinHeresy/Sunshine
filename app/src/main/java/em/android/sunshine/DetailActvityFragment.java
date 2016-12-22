@@ -240,6 +240,7 @@ public class DetailActvityFragment extends Fragment implements LoaderManager.Loa
             }
         }
 
+
         AppCompatActivity activity = (AppCompatActivity) getActivity();
         Toolbar toolbarView = (Toolbar) getView().findViewById(R.id.toolbar);
 

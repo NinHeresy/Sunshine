@@ -1,0 +1,68 @@
+<android.support.v7.widget.GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    app:columnCount="2">
+
+    <TextView
+        android:id="@+id/list_item_date_textview"
+        android:layout_width="0dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        app:layout_columnSpan="2"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:targetApi="jelly_bean"
+        tools:text="@string/_20_de_outubro" />
+
+    <ImageView
+        android:id="@+id/list_item_icon"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:adjustViewBounds="true"
+        android:maxWidth="50dp"
+        android:minHeight="70dp"
+        app:layout_columnWeight="1"
+        app:layout_gravity="fill_horizontal"
+        tools:ignore="ContentDescription"
+        tools:src="@drawable/art_clouds" />
+
+    <TextView
+        android:id="@+id/list_item_high_textview"
+        android:layout_width="0dp"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        app:layout_columnWeight="1"
+        app:layout_gravity="center_vertical"
+        tools:targetApi="jelly_bean"
+        tools:text="19" />
+
+    <TextView
+        android:id="@+id/list_item_forecast_textview"
+        android:layout_width="0dp"
+        android:fontFamily="sans-serif"
+        android:gravity="center_horizontal"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
+        app:layout_columnWeight="1"
+        tools:targetApi="jelly_bean"
+        tools:text="@string/clear" />
+
+    <TextView
+        android:id="@+id/list_item_low_textview"
+        android:layout_width="0dp"
+        android:layout_marginBottom="@dimen/abc_list_item_padding_horizontal_material"
+        android:fontFamily="sans-serif-light"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        app:layout_columnWeight="1"
+        tools:ignore="PrivateResource"
+        tools:targetApi="jelly_bean"
+        tools:text="10" />
+
+
+</android.support.v7.widget.GridLayout>
