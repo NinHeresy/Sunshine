@@ -15,6 +15,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,6 +29,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import em.android.sunshine.adapter.ForecastAdapter;
+import em.android.sunshine.adapter.ForecastRecyclerAdapter;
 import em.android.sunshine.data.WeatherContract;
 import em.android.sunshine.utility.Utility;
 import  em.android.sunshine.sync.SunshineSyncAdapter;
@@ -40,12 +43,16 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         SharedPreferences.OnSharedPreferenceChangeListener{
     public static final String LOG_TAG = SecondFragment.class.getSimpleName();
     private static final int FORECAST_LOADER = 0;
+
     ListView listView;
     View rootView;
-    private ForecastAdapter mForecastAdapter;
+//    private ForecastAdapter mForecastAdapter;
+    private ForecastRecyclerAdapter mForecastAdapter;
+    private RecyclerView mRecyclerView;
+    private int mPosition = RecyclerView.NO_POSITION;
 
 
-    private int mPosition = ListView.INVALID_POSITION;
+//    private int mPosition = ListView.INVALID_POSITION;
     private boolean mUseTodayLayout;
 
     private static final String SELECTED_KEY = "selected_position";
@@ -138,57 +145,73 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0);
-        rootView = inflater.inflate(R.layout.fragment_first, container, false);
+//        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0); sem recycler
+        mForecastAdapter = new ForecastRecyclerAdapter(getActivity());
+
+//        rootView = inflater.inflate(R.layout.fragment_first, container, false); sem recycler
+        rootView = inflater.inflate(R.layout.fragment_main_recycler, container, false);
+
+        mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_forecast);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setAdapter(mForecastAdapter);
 
         //exibir o nome da cidade *tem que ser feito aqui porque ela só será carregada uma vez!!!
-        String locationQuery = Utility.getPreferredLocation(getContext());
-        Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(locationQuery, System.currentTimeMillis());
-        Cursor cursor = getContext().getContentResolver().query(weatherUri, FORECAST_COLUMNS, null, null, null);
-
-        if (cursor.moveToFirst()) {
-            String cityName = cursor.getString(COL_CITY_NAME);
-            TextView textView = (TextView) rootView.findViewById(R.id.list_item_cityname_textview);
-            textView.setText(cityName);
-        }
-
-
-        listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
-
-        View emptyView = rootView.findViewById(R.id.listview_forecast_empty);
-        listView.setEmptyView(emptyView);//aparece se não existirem dados a serem exibidos
-
-
-        listView.setAdapter(mForecastAdapter); //preencherá a lista com informaçoes do adaptador
-
-        // We'll call our MainActivity
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
-                // CursorAdapter returns a cursor at the correct position for getItem(), or null
-                // if it cannot seek to that position.
+//        String locationQuery = Utility.getPreferredLocation(getContext());
+//        Uri weatherUri = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(locationQuery, System.currentTimeMillis());
+//        Cursor cursor = getContext().getContentResolver().query(weatherUri, FORECAST_COLUMNS, null, null, null);
+//
+//        if (cursor.moveToFirst()) {
+//            String cityName = cursor.getString(COL_CITY_NAME);
+//            TextView textView = (TextView) rootView.findViewById(R.id.list_item_cityname_textview);
+//            textView.setText(cityName);
+//        }
+//
+//
+//        listView = (ListView) rootView.findViewById(R.id.list_view_forecast);
+//
+//        View emptyView = rootView.findViewById(R.id.listview_forecast_empty);
+//        listView.setEmptyView(emptyView);//aparece se não existirem dados a serem exibidos
+//
+//
+//        listView.setAdapter(mForecastAdapter); //preencherá a lista com informaçoes do adaptador
+//
+//        // We'll call our MainActivity
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+//                // CursorAdapter returns a cursor at the correct position for getItem(), or null
+//                // if it cannot seek to that position.
+////                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
+////                if (cursor != null) {
+////                    String locationSetting = Utility.getPreferredLocation(getActivity());
+////                    Intent intent = new Intent(getActivity(), DetailActvity.class)
+////                            .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+////                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
+////                            ));
+////                    startActivity(intent);
+////                }
+//
 //                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
 //                if (cursor != null) {
 //                    String locationSetting = Utility.getPreferredLocation(getActivity());
-//                    Intent intent = new Intent(getActivity(), DetailActvity.class)
-//                            .setData(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+//                    ((Callback) getActivity())
+//                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
 //                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
 //                            ));
-//                    startActivity(intent);
 //                }
+//                mPosition = position;
+//            }
+//        });
 
-                Cursor cursor = (Cursor) adapterView.getItemAtPosition(position);
-                if (cursor != null) {
-                    String locationSetting = Utility.getPreferredLocation(getActivity());
-                    ((Callback) getActivity())
-                            .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                                    locationSetting, cursor.getLong(COL_WEATHER_DATE)
-                            ));
-                }
-                mPosition = position;
-            }
-        });
+        if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+            // The RecyclerView probably hasn't even been populated yet.  Actually perform the
+            // swapout in onLoadFinished.
+            mPosition = savedInstanceState.getInt(SELECTED_KEY);
+        }
+
+        mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
+
         return rootView;
     }
 
