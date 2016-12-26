@@ -50,6 +50,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     private ForecastRecyclerAdapter mForecastAdapter;
     private RecyclerView mRecyclerView;
     private int mPosition = RecyclerView.NO_POSITION;
+    View emptyView;
 
 
 //    private int mPosition = ListView.INVALID_POSITION;
@@ -146,13 +147,30 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
                              Bundle savedInstanceState) {
 
 //        mForecastAdapter = new ForecastAdapter(getActivity(), null, 0); sem recycler
-        mForecastAdapter = new ForecastRecyclerAdapter(getActivity());
 
 //        rootView = inflater.inflate(R.layout.fragment_first, container, false); sem recycler
         rootView = inflater.inflate(R.layout.fragment_main_recycler, container, false);
 
         mRecyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerview_forecast);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        emptyView = rootView.findViewById(R.id.recyclerview_forecast_empty);
+
+        mRecyclerView.setHasFixedSize(true);
+
+
+        mForecastAdapter = new ForecastRecyclerAdapter(getActivity(), new ForecastRecyclerAdapter.ForecastAdapterOnClickHandler() {
+
+            @Override
+            public void onClick(Long date, ForecastRecyclerAdapter.ForecastAdapterViewHolder vh) {
+                String locationSetting = Utility.getPreferredLocation(getActivity());
+                ((Callback) getActivity())
+                        .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
+                                locationSetting, date)
+                        );
+                mPosition = vh.getAdapterPosition();
+            }
+        }, emptyView);
+
         mRecyclerView.setAdapter(mForecastAdapter);
 
         //exibir o nome da cidade *tem que ser feito aqui porque ela só será carregada uma vez!!!
@@ -292,7 +310,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
     private void updateEmptyView() {
-        if ( mForecastAdapter.getCount() == 0 ) {
+        if ( mForecastAdapter.getItemCount() == 0 ) {
             TextView tv = (TextView) getView().findViewById(R.id.listview_forecast_empty);
             if ( null != tv ) {
                 // if cursor is empty, why? do we have an invalid location
