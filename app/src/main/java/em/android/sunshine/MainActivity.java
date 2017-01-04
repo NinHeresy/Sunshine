@@ -10,7 +10,7 @@ import android.view.MenuItem;
 
 import com.google.firebase.crash.FirebaseCrash;
 
-import em.android.sunshine.adapter.ForecastAdapter;
+import em.android.sunshine.adapter.ForecastRecyclerAdapter;
 import em.android.sunshine.sync.SunshineSyncAdapter;
 import em.android.sunshine.utility.Utility;
 
@@ -22,7 +22,7 @@ public class  MainActivity extends AppCompatActivity implements SecondFragment.C
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_recycler);
 
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

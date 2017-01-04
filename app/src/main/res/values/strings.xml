@@ -177,6 +177,8 @@
     <string name="pref_location_unknown_description">Validating Location... (<xliff:g id="location_setting">%1$s</xliff:g>)"</string>
     <string name="title_activity_splash_screen">SplashScreenActivity</string>
     <string name="icone_condicao_de_tempo">ícone condicao de tempo</string>
+    <string name="empty_forecast_list_invalid_location">Localização inválida</string>
+    <string name="empty_forecast_list">Sem dados</string>
 
 </resources>
 

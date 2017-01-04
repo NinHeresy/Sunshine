@@ -25,6 +25,9 @@ import em.android.sunshine.utility.Utility;
     private static final int VIEW_TYPE_TODAY = 0;
     private static final int VIEW_TYPE_FUTURE_DAY = 1;
 
+    private static final int VIEW_TYPE_COUNT = 2;
+
+
     // Flag to determine if we want to use a separate view for "today".
     private boolean mUseTodayLayout = true;
 
@@ -33,6 +36,7 @@ import em.android.sunshine.utility.Utility;
 
     final private ForecastAdapterOnClickHandler mClickHandler;
     final private View mEmptyView;
+    final private ItemChoiceManager mICM;
 
 
 
@@ -51,6 +55,7 @@ import em.android.sunshine.utility.Utility;
             mHighTempView = (TextView) view.findViewById(R.id.list_item_high_textview);
             mLowTempView = (TextView) view.findViewById(R.id.list_item_low_textview);
             view.setOnClickListener(this);
+
         }
 
         @Override
@@ -59,17 +64,25 @@ import em.android.sunshine.utility.Utility;
             mCursor.moveToPosition(adapterPosition);
             int dateColumnIndex = mCursor.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATE);
             mClickHandler.onClick(mCursor.getLong(dateColumnIndex), this);
+            mICM.onClick(this);
         }
     }
+
+    public int getSelectedItemPosition() {
+        return mICM.getSelectedItemPosition();
+    }
+
 
     public static interface ForecastAdapterOnClickHandler {
         void onClick(Long date, ForecastAdapterViewHolder vh);
     }
 
-    public ForecastRecyclerAdapter(Context context, ForecastAdapterOnClickHandler dh, View emptyView) {
+    public ForecastRecyclerAdapter(Context context, ForecastAdapterOnClickHandler dh, View emptyView,int choiceMode ) {
         mContext = context;
         mClickHandler = dh;
         mEmptyView = emptyView;
+        mICM = new ItemChoiceManager(this);
+        mICM.setChoiceMode(choiceMode);
     }
 
 
@@ -157,7 +170,11 @@ import em.android.sunshine.utility.Utility;
 
     @Override
     public int getItemViewType(int position) {
-        return (position == 0 && mUseTodayLayout) ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
+        return position == 0 ? VIEW_TYPE_TODAY : VIEW_TYPE_FUTURE_DAY;
+    }
+    
+    public int getViewTypeCount() {
+        return VIEW_TYPE_COUNT;
     }
 
     @Override
@@ -174,5 +191,12 @@ import em.android.sunshine.utility.Utility;
 
     public Cursor getCursor() {
         return mCursor;
+    }
+
+    public void selectView(RecyclerView.ViewHolder viewHolder) {
+        if ( viewHolder instanceof ForecastAdapterViewHolder ) {
+            ForecastAdapterViewHolder vfh = (ForecastAdapterViewHolder)viewHolder;
+            vfh.onClick(vfh.itemView);
+        }
     }
 }
