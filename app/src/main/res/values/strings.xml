@@ -156,13 +156,13 @@
 
 
     <!-- Format for retrieving art from an external source [CHAR LIMIT=NONE] -->
-    <string name="pref_art_pack_label">Icon Pack</string>
+    <string name="pref_art_pack_label">Pacote de ícones</string>
 
     <!-- Label for Sunshine option in art pack preference [CHAR LIMIT=25] -->
     <string name="pref_art_pack_label_sunshine">Sunshine</string>
 
     <!-- Label for cute dogs option in art pack preference [CHAR LIMIT=25] -->
-    <string name="pref_art_pack_label_cute_dogs">Cute dogs</string>
+    <string name="pref_art_pack_label_cute_dogs">Coloridos</string>
 
     <!-- Key name for art pack unit preference in SharedPreferences [CHAR LIMIT=NONE] -->
     <string name="pref_art_pack_key" translatable="false">art_pack</string>
@@ -180,6 +180,14 @@
     <string name="empty_forecast_list_invalid_location">Localização inválida</string>
     <string name="empty_forecast_list">Sem dados</string>
     <string name="gcm_weather_alert">Heads up: %1$s in %2$s!</string>
+    <string name="pref_current_location_desc">Use minha localização</string>
+    <string name="gcm_defaultSenderId" />
+
+    <!-- Key name for storing location latlong in SharedPreferences -->
+    <string name="pref_location_latitude" translatable="false">loc-latitude</string>
+    <string name="pref_location_longitude" translatable="false">loc-longitude</string>
+
+    <string name="attribution_text">Powered by Google</string>
 
 </resources>
 

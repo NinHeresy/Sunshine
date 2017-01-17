@@ -5,7 +5,7 @@
     </declare-styleable>
     <declare-styleable name="SecondFragment">
         <attr name="android:choiceMode" />
-        <attr name="autoSelectView" format="boolean" />
-        <attr name="sharedElementTransitions" format="boolean" />
+        <attr name="autoSelectView" format="boolean"/>
+        <attr name="sharedElementTransitions" format="boolean"/>
     </declare-styleable>
 </resources>

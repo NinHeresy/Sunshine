@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SecondFragment.Ca
 //        SecondFragment forecastFragment =  ((SecondFragment)getSupportFragmentManager()
 //                .findFragmentById(R.id.container_fragment));
 
-        FirebaseCrash.log("Activity created");
+//        FirebaseCrash.log("Activity created");
         SunshineSyncAdapter.initializeSyncAdapter(this);
 
         if (!checkPlayServices()) {

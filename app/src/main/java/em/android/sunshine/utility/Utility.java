@@ -17,13 +17,15 @@ import java.util.Date;
 import java.util.Locale;
 
 import em.android.sunshine.R;
+import em.android.sunshine.SetingsActivity;
 import em.android.sunshine.sync.SunshineSyncAdapter;
 
 public class Utility {
 
 
     public static final String DATE_FORMAT = "yyyyMMdd";
-
+    // We'll default our latlong to 0. Yay, "Earth!"
+    public static float DEFAULT_LATLONG = 0F;
 
     public static String getPreferredLocation(Context context) {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
@@ -453,4 +455,23 @@ public class Utility {
                     sunshineArtPack).equals(sunshineArtPack);
         }
 
+    public static boolean isLocationLatLonAvailable(Context context) {
+        SharedPreferences prefs
+                = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.contains(context.getString(R.string.pref_location_latitude))
+                && prefs.contains(context.getString(R.string.pref_location_longitude));
     }
+    public static float getLocationLatitude(Context context) {
+        SharedPreferences prefs
+                = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getFloat(context.getString(R.string.pref_location_latitude),
+                DEFAULT_LATLONG);
+    }
+
+    public static float getLocationLongitude(Context context) {
+        SharedPreferences prefs
+                = PreferenceManager.getDefaultSharedPreferences(context);
+        return prefs.getFloat(context.getString(R.string.pref_location_longitude),
+                DEFAULT_LATLONG);
+    }
+}
