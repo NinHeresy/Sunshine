@@ -9,8 +9,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|center_vertical"
         android:contentDescription="@string/pref_current_location_desc"
-        android:src="@mipmap/ic_location"
+       android:src="@mipmap/ic_location"
         android:tint="@color/material_deep_teal_500" />
+
+
 
 
 </FrameLayout>

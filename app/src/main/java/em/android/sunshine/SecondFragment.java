@@ -10,10 +10,13 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+
+import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -43,6 +46,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         SharedPreferences.OnSharedPreferenceChangeListener{
     public static final String LOG_TAG = SecondFragment.class.getSimpleName();
     private static final int FORECAST_LOADER = 0;
+    private boolean mHoldForTransition;
 
     ListView listView;
     View rootView;
@@ -151,6 +155,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
                 0, 0);
         mChoiceMode = a.getInt(R.styleable.SecondFragment_android_choiceMode, AbsListView.CHOICE_MODE_NONE);
         mAutoSelectView = a.getBoolean(R.styleable.SecondFragment_autoSelectView, false);
+        mHoldForTransition = a.getBoolean(R.styleable.SecondFragment_sharedElementTransitions, false);
         a.recycle();
     }
 
@@ -177,7 +182,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
                 String locationSetting = Utility.getPreferredLocation(getActivity());
                 ((Callback) getActivity())
                         .onItemSelected(WeatherContract.WeatherEntry.buildWeatherLocationWithDate(
-                                locationSetting, date)
+                                locationSetting, date), vh
                         );
                 mPosition = vh.getAdapterPosition();
             }
@@ -205,6 +210,28 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
         if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
+
+    }
+    final AppBarLayout appbarView = (AppBarLayout)rootView.findViewById(R.id.parallax_bar);
+    if (null != appbarView) {
+        ViewCompat.setElevation(appbarView, 0);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (0 == mRecyclerView.computeVerticalScrollOffset()) {
+                        appbarView.setElevation(0);
+                    } else {
+                        appbarView.setElevation(appbarView.getTargetElevation());
+                    }
+                }
+            });
+        }
+    }
+
+
+    if (savedInstanceState != null && savedInstanceState.containsKey(SELECTED_KEY)) {
             // The RecyclerView probably hasn't even been populated yet.  Actually perform the
             // swapout in onLoadFinished.
             mPosition = savedInstanceState.getInt(SELECTED_KEY);
@@ -217,6 +244,9 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
+        if ( mHoldForTransition ) {
+            getActivity().supportPostponeEnterTransition();
+        }
         getLoaderManager().initLoader(FORECAST_LOADER, null, this);
         super.onActivityCreated(savedInstanceState);
     }
@@ -274,7 +304,7 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
         if (mPosition != ListView.INVALID_POSITION) {
             // If we don't need to restart the loader, and there's a desired position to restore
             // to, do so now.
-            listView.smoothScrollToPosition(mPosition);
+            mRecyclerView.smoothScrollToPosition(mPosition);
         }
         updateEmptyView();
 
@@ -354,6 +384,6 @@ public class SecondFragment extends Fragment implements LoaderManager.LoaderCall
 
     public interface Callback {
 
-        public void onItemSelected(Uri dateUri);
+        public void onItemSelected(Uri dateUri, ForecastRecyclerAdapter.ForecastAdapterViewHolder vh);
     }
 }

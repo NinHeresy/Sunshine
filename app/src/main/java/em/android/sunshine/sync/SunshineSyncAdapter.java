@@ -55,6 +55,7 @@ import em.android.sunshine.MainActivity;
 import em.android.sunshine.R;
 import em.android.sunshine.data.WeatherContract;
 import em.android.sunshine.utility.Utility;
+import em.android.sunshine.muzei.WeatherMuzeiSource;
 
 /**
  * Created by emanu on 24/11/2016.
@@ -64,6 +65,8 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
 
     private static final long DAY_IN_MILLIS = 1000 * 60 * 60 * 24;
     private static final int WEATHER_NOTIFICATION_ID = 600;
+    public static final String ACTION_DATA_UPDATED =
+            "em.android.sunshine.ACTION_DATA_UPDATED";
 
     public final String LOG_TAG = SunshineSyncAdapter.class.getSimpleName();
     public static final int SYNC_INTERVAL = 20;
@@ -118,6 +121,16 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
         } else {
             ContentResolver.addPeriodicSync(account,
                     authority, new Bundle(), syncInterval);
+        }
+    }
+
+    private void updateMuzei() {
+        // Muzei is only compatible with Jelly Bean MR1+ devices, so there's no need to update the
+        // Muzei background on lower API level devices
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            Context context = getContext();
+            context.startService(new Intent(ACTION_DATA_UPDATED)
+                    .setClass(context, WeatherMuzeiSource.class));
         }
     }
 
@@ -498,6 +511,7 @@ public class SunshineSyncAdapter extends AbstractThreadedSyncAdapter {
                         WeatherContract.WeatherEntry.COLUMN_DATE + " <= ?",
                         new String[]{Long.toString(dayTime.setJulianDay(julianStartDay - 1))});
 
+                updateMuzei();
                 notifyWeather();
             }
 

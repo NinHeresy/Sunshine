@@ -92,6 +92,18 @@
                     <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 </intent-filter>
             </service>
+
+<!--Muzei-->
+        <service android:name=".muzei.WeatherMuzeiSource"
+            android:icon="@drawable/ic_muzei"
+            android:label="@string/app_name"
+            android:description="@string/muzei_description" >
+            <intent-filter>
+                <action android:name="com.google.android.apps.muzei.api.MuzeiArtSource" />
+            </intent-filter>
+            <meta-data android:name="color" android:value="@color/colorPrimary" />
+        </service>
+
             <service
                 android:name="gcm.MyInstanceIDListenerService"
                 android:exported="false">

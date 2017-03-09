@@ -148,7 +148,7 @@ public class MainActivity extends AppCompatActivity implements SecondFragment.Ca
 //    }
 
     @Override
-    public void onItemSelected(Uri contentUri) {
+    public void onItemSelected(Uri contentUri , ForecastRecyclerAdapter.ForecastAdapterViewHolder vh) {
         if (mTwoPane) {
             // In two-pane mode, show the detail view in this activity by
             // adding or replacing the detail fragment using a
